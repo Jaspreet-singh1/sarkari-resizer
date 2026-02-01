@@ -26,3 +26,5 @@ Sarkari Resizer is a privacy-first, client-side web application designed to help
 ## 🔒 License
 This project is proprietary.
 &copy; 2026 Sarkari Resizer. All Rights Reserved.
+
+Made by Jaspreet Singh
