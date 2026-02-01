@@ -254,6 +254,19 @@ section {
     display: none;
 }
 
+[data-theme="dark"] .radio-chip {
+    background: #2c2c2c;
+    border-color: #444;
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .radio-chip:has(input:checked) {
+    background: rgba(138, 180, 248, 0.15);
+    /* Low opacity primary */
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
 /* Prevention & Preview */
 .preview-container {
     text-align: center;
@@ -307,6 +320,14 @@ section {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-std);
     font-size: 1rem;
+    background: transparent;
+    color: var(--text-main);
+}
+
+[data-theme="dark"] .form-input {
+    background: #2c2c2c;
+    border-color: #444;
+    color: var(--text-main);
 }
 
 /* Secondary Button */
@@ -581,6 +602,23 @@ section {
 [data-theme="dark"] .btn-secondary-outline:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: #fff;
+}
+
+.donate-link {
+    color: var(--text-main);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: #FFDD00;
+    text-decoration-thickness: 3px;
+    transition: all 0.2s;
+}
+
+.donate-link:hover {
+    background-color: #FFDD00;
+    color: #000;
+    text-decoration: none;
+    padding: 2px 4px;
+    border-radius: 4px;
 }
 
 @media (max-width: 480px) {

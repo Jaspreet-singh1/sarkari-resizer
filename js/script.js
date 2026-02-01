@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const storedTheme = localStorage.getItem('theme');
 
-    // Check preference
-    if (storedTheme === 'dark') {
+    // Check preference (Local Storage > System Preference)
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (storedTheme === 'dark' || (!storedTheme && systemPrefersDark)) {
         document.documentElement.setAttribute('data-theme', 'dark');
         themeToggle.textContent = '☀️';
     }
