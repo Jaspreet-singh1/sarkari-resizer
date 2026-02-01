@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarkari Photo Resizer - 20KB, 50KB tool for Govt Forms, Jobs & Admissions</title>
+    <meta name="description"
+        content="Free tool to resize & compress photos for SSC, UPSC, Govt Jobs. Best Image Compressor to reduce file size to 20KB, 50KB. Convert JPG to PDF.">
+    <meta name="keywords"
+        content="sarkari photo resizer, image compressor, photo compressor, reduce image size in kb, compress jpeg to 20kb, signature resizer, passport photo maker">
+    <meta name="theme-color" content="#1a73e8">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sarkariresizer.app/">
+    <meta property="og:title" content="Sarkari Photo Resizer - 20KB, 50KB tool for Govt Forms">
+    <meta property="og:description"
+        content="Free tool to resize photos for SSC, UPSC, School/College admissions, Private Jobs, and Passport. 100% Secure & Private.">
+    <meta property="og:image" content="https://sarkariresizer.app/assets/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://sarkariresizer.app/">
+    <meta property="twitter:title" content="Sarkari Photo Resizer - 20KB, 50KB tool for Govt Forms">
+    <meta property="twitter:description"
+        content="Free tool to resize photos for SSC, UPSC, School/College admissions, Private Jobs, and Passport. 100% Secure & Private.">
+    <meta property="twitter:image" content="https://sarkariresizer.app/assets/og-image.png">
+
+    <!-- CSP: Security First -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://cdnjs.cloudflare.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline';">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/seo.css">
+    <link rel="stylesheet" href="css/preview.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="manifest" href="manifest.json">
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('Service Worker Registered'))
+                .catch((err) => console.log('SW Failed:', err));
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="logo-container">
+            <div class="logo"><span class="brand-name">Sarkari</span> <span class="badge">Resizer</span></div>
+            <div class="tagline">Sarkari Kaam, Ab Hoga Aasaan</div>
+        </div>
+        <nav style="display: flex; align-items: center; gap: 0.8rem;">
+            <button id="share-btn" class="btn-share" aria-label="Share App">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                    <polyline points="16 6 12 2 8 6"></polyline>
+                    <line x1="12" y1="2" x2="12" y2="15"></line>
+                </svg>
+                Share
+            </button>
+            <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">🌙</button>
+            <a href="#help" class="btn-help">Help</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>India's Most Trusted Photo & Document Resizer</h1>
+            <p class="subtitle">Perfect for Govt Forms, College Admissions, Jobs & Passports.</p>
+            <div class="form-badges">
+                <span>SSC/UPSC</span>
+                <span>Admissions</span>
+                <span>Job Portals</span>
+                <span>Passport</span>
+                <span>Visa</span>
+            </div>
+
+            <!-- Ad Unit 1 Placeholder -->
+            <div class="ad-slot ad-top">
+                <!-- Google AdSense Code -->
+                <div class="ad-placeholder"></div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="drop-zone">
+                <input type="file" id="file-input" accept="image/png, image/jpeg, image/jpg" hidden>
+                <button class="btn-primary-large" id="select-btn">Upload Photo, Sign or Document</button>
+                <p class="trust-badge">🔒 100% Private - Your files never leave your device.</p>
+                <p class="trust-badge-small">Trusted by candidates, students, and professionals.</p>
+            </div>
+        </section>
+
+        <!-- Editor Section (Hidden initially) -->
+        <section id="editor-section" class="editor hidden">
+            <div class="preview-container">
+                <img id="image-preview" src="" alt="Preview">
+                <p id="original-size">Original: 0 KB</p>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>Target Size (Max)</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="size" value="20"> 20 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="50" checked> 50 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="100"> 100 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
+                    </div>
+                    <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
+                        min="10" max="1000">
+                </div>
+
+                <div class="control-group">
+                    <label>Dimensions (Optional)</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="width-input" placeholder="Width (px)" class="form-input">
+                        <input type="number" id="height-input" placeholder="Height (px)" class="form-input">
+                    </div>
+                    <label class="checkbox-label"
+                        style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-main); cursor: pointer;">
+                        <input type="checkbox" id="auto-resize-check" checked
+                            style="accent-color: var(--primary); width: 16px; height: 16px;">
+                        Auto-adjust dimensions for best quality ✨
+                    </label>
+                    <p style="font-size: 0.8rem; color: #666; margin-top: 2px;">Uncheck to force original dimensions
+                        (may reduce clarity).</p>
+                </div>
+
+                <div class="control-group">
+                    <label>Output Format</label>
+                    <div class="format-group">
+                        <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked>
+                            JPEG</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="image/png"> PNG</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="application/pdf"> PDF</label>
+                    </div>
+                </div>
+
+                <button id="compress-btn" class="btn-action">Resize & Compress</button>
+            </div>
+        </section>
+
+        <!-- Result Section (Hidden initially) -->
+        <section id="result-section" class="result hidden">
+            <!-- Ad Unit 2 Placeholder -->
+            <div class="ad-slot ad-mid">
+                <div class="ad-placeholder"></div>
+            </div>
+
+            <div class="success-box">
+                <h3>Ready to Upload! 🎉</h3>
+                <p class="success-note">This file meets Govt form standards.</p>
+                <img id="result-image" class="result-preview" src="" alt="Compressed Result">
+                <p id="final-size-display">New Size: 48 KB</p>
+                <div class="download-actions">
+                    <a id="download-link" class="btn-download" download="compressed.jpg">Download Image</a>
+                    <button id="reset-btn" class="btn-text">Convert Another</button>
+                </div>
+                <div class="share-prompt">
+                    <p>❤️ <b>Support us:</b> Help a friend by sharing!</p>
+                    <button class="btn-whatsapp"
+                        onclick="window.open('https://api.whatsapp.com/send?text=I used SarkariResizer.app to resize my photo for govt form. It is fast and safe! Check it out: https://sarkariresizer.app', '_blank')">Share
+                        on WhatsApp</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ / SEO Content -->
+        <section class="seo-content" id="help">
+            <h2>How to reduce photo size for Government Forms?</h2>
+            <p>Most Indian government exams (SSC CGL, CHSL, UPSC, Railways RRB, IBPS) have strict rules for photo and
+                signature upload. Specifically:</p>
+
+            <div class="exam-grid">
+                <div class="exam-card">
+                    <span class="exam-name">SSC Exams</span>
+                    <div class="exam-detail"><strong>Photo:</strong> 20 - 50 KB</div>
+                    <div class="exam-detail"><strong>Sign:</strong> 10 - 20 KB</div>
+                </div>
+                <div class="exam-card">
+                    <span class="exam-name">UPSC Civil Services</span>
+                    <div class="exam-detail"><strong>Photo:</strong> 20 - 300 KB</div>
+                    <div class="exam-detail"><strong>Sign:</strong> 20 - 300 KB</div>
+                </div>
+                <div class="exam-card">
+                    <span class="exam-name">IBPS / Bank</span>
+                    <div class="exam-detail"><strong>Photo:</strong> 20 - 50 KB</div>
+                    <div class="exam-detail"><strong>Sign:</strong> 10 - 20 KB</div>
+                </div>
+                <div class="exam-card">
+                    <span class="exam-name">Railways (RRB)</span>
+                    <div class="exam-detail"><strong>Photo:</strong> 15 - 40 KB</div>
+                    <div class="exam-detail"><strong>Sign:</strong> 10 - 20 KB</div>
+                </div>
+            </div>
+
+            <div class="pro-tips">
+                <h3>Candidate Pro Tips (Read carefully)</h3>
+                <div class="tip-card"><b>No Glasses:</b> Don't wear glasses in photos, even if you wear them daily. Many
+                    forms reject photos with glare/reflections.</div>
+                <div class="tip-card"><b>Plain Background:</b> If you don't have a white wall, hang a simple
+                    white/light-colored bedsheet behind you.</div>
+                <div class="tip-card"><b>Don't Crop Too Much:</b> Keep some space above your head and include your
+                    shoulders. The SSC portal crops it further automatically.</div>
+            </div>
+
+            <div class="faq-container">
+                <h3>Direct Answers for Your Doubts</h3>
+
+                <div class="faq-item">
+                    <h4>How to compress image to 20kb or 50kb?</h4>
+                    <p>Upload photo -> Select "20 KB" or "50 KB" -> Click Resize. Done. The tool automatically maintains
+                        face clarity while reducing file size.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Is it limited to Govt Forms?</h4>
+                    <p>No. You can use it for School/College admissions (DU, IIT, NEET), Private Job Portals (LinkedIn,
+                        Naukri), Passport/Visa applications, or any portal that asks for a specific KB size.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Is it safe for Exams & Admissions?</h4>
+                    <p>Yes. Thousands of candidates use this for SSC, UPSC, IBPS, and State PSCs. The file format (JPEG)
+                        and size meet all portal requirements.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Does it work on Mobile/Phone?</h4>
+                    <p>Primary focus is mobile. It works perfectly on Chrome/Safari on your Android or iPhone. No app
+                        download needed.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>What are the standard dimensions (px)?</h4>
+                    <p>Usually, 3.5 x 4.5 cm is required. In pixels, use 413 x 531 px for a high-quality passport photo.
+                        Most forms accept 200 x 230 px as well.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Blue or White Background?</h4>
+                    <p>Check your notification. SSC usually prefers a light background. UPSC prefers white. Always
+                        ensure your face covers 70-80% of the photo.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Signature: Black or Blue ink?</h4>
+                    <p>Almost all govt forms (SSC, IBPS) strictly require <b>Black Ink</b> on white paper. Don't risk it
+                        with blue or gel pens.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Is it really free? Do you save photos?</h4>
+                    <p>100% Free. No login. No watermark. We don't even see your photos—processing happens inside your
+                        browser, not on our server.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Photo ka size kaise kam kare?</h4>
+                    <p>"Select Image" dabayein -> size chunein -> Download karein. Simple aur fast.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Persistent Support Section -->
+        <section class="support-section">
+            <div class="support-content">
+                <h3>❤️ Support this Project</h3>
+                <p>We keep this tool <b>100% Free & Private</b> for everyone. The only way we grow is if you share it.
+                </p>
+                <div class="share-buttons">
+                    <button class="btn-whatsapp"
+                        onclick="window.open('https://api.whatsapp.com/send?text=I used SarkariResizer.app to resize my photo for govt form. It is fast and safe! Check it out: https://sarkariresizer.app', '_blank')">
+                        <span class="icon">💬</span> Share on WhatsApp
+                    </button>
+                    <button id="share-more-btn" class="btn-secondary-outline">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                        More Options
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2026 Sarkari Photo Resizer. Free & Secure.</p>
+        <div class="footer-links">
+            <a href="/privacy">Privacy</a>
+            <a href="/disclaimer">Disclaimer</a>
+            <a href="mailto:sarkariresizer@gmail.com">Contact</a>
+        </div>
+        <!-- Ad Unit 3 (Sticky) Placeholder -->
+    </footer>
+
+    <!-- PDF Support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

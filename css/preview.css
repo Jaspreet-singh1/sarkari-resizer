@@ -1,0 +1,9 @@
+/* Result Preview */
+.result-preview {
+    max-width: 100%;
+    max-height: 250px;
+    border-radius: 4px;
+    margin: 1rem 0;
+    border: 2px solid #e8f0fe;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

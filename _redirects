@@ -1,0 +1,3 @@
+/* Cloudflare Pages Routing Rule */
+/privacy /privacy.html 200
+/disclaimer /disclaimer.html 200
