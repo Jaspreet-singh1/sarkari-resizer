@@ -22,13 +22,6 @@ Sarkari Resizer is a privacy-first, client-side web application designed to help
 - **Hosting**: Static Hosting (Vercel/Netlify/GitHub Pages).
 - **Analytics**: Google Search Console & Hosting Logs.
 
-## ⚡ Local Development
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/Jaspreet-singh1/sarkari-resizer.git
-   ```
-2. Open `index.html` in your browser.
-   - OR use a live server (VS Code Extension) for the best experience.
 
 ## 🔒 License
 This project is proprietary.
