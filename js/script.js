@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const handleShare = async () => {
         const shareData = {
             title: 'Sarkari Photo Resizer',
-            text: 'Free tool to resize photos for SSC/UPSC exams! ⚡',
+            text: 'Resize photos for Govt Forms, Jobs & Admissions in 1 click! ⚡',
             url: window.location.href
         };
 
