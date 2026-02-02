@@ -19,6 +19,9 @@
         content="Free tool to resize photos for SSC, UPSC, School/College admissions, Private Jobs, and Passport. 100% Secure & Private.">
     <meta property="og:image" content="https://sarkariresizer.app/assets/og-image.png">
 
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sarkariresizer.app/">
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://sarkariresizer.app/">
@@ -38,6 +41,8 @@
     <link rel="stylesheet" href="css/seo.css">
     <link rel="stylesheet" href="css/preview.css">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
     <link rel="manifest" href="manifest.json">
 
     <script>
@@ -46,6 +51,80 @@
                 .then(() => console.log('Service Worker Registered'))
                 .catch((err) => console.log('SW Failed:', err));
         }
+    </script>
+
+    <!-- Schema.org Structured Data (JSON-LD) for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Sarkari Photo Resizer",
+          "operatingSystem": "Web",
+          "applicationCategory": "PhotoEditor",
+          "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "INR"
+          },
+          "description": "Free tool to resize & compress photos for SSC, UPSC, Govt Jobs. Reduce file size to 20KB, 50KB online.",
+          "url": "https://sarkariresizer.app",
+          "image": "https://sarkariresizer.app/assets/favicon-512.png"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How to compress image to 20kb or 50kb?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Upload photo -> Select '20 KB' or '50 KB' -> Click Resize. Done. The tool automatically maintains face clarity while reducing file size."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it limited to Govt Forms?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. You can use it for School/College admissions, Private Job Portals, Passport/Visa applications, or any portal that asks for a specific KB size."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe for Exams & Admissions?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Thousands of candidates use this for SSC, UPSC, IBPS, and State PSCs. The file format (JPEG) and size meet all portal requirements."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does it work on Mobile/Phone?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Primary focus is mobile. It works perfectly on Chrome/Safari on your Android or iPhone. No app download needed."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it really free? Do you save photos?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "100% Free. No login. No watermark. We don't even see your photos—processing happens inside your browser, not on our server."
+              }
+            }
+          ]
+        },
+        {
+            "@type": "Organization",
+            "name": "Sarkari Resizer",
+            "url": "https://sarkariresizer.app",
+            "logo": "https://sarkariresizer.app/assets/favicon-512.png"
+        }
+      ]
+    }
     </script>
 
     <!-- Adsense-->
@@ -111,7 +190,7 @@
         <!-- Editor Section (Hidden initially) -->
         <section id="editor-section" class="editor hidden">
             <div class="preview-container">
-                <img id="image-preview" src="" alt="Preview">
+                <img id="image-preview" src="" alt="Uploaded Photo Preview">
                 <p id="original-size">Original: 0 KB</p>
             </div>
 
@@ -168,7 +247,7 @@
             <div class="success-box">
                 <h3>Ready to Upload! 🎉</h3>
                 <p class="success-note">This file meets Govt form standards.</p>
-                <img id="result-image" class="result-preview" src="" alt="Compressed Result">
+                <img id="result-image" class="result-preview" src="" alt="Compressed Result" loading="lazy">
                 <p id="final-size-display">New Size: 48 KB</p>
                 <div class="download-actions">
                     <a id="download-link" class="btn-download" download="compressed.jpg">Download Image</a>
