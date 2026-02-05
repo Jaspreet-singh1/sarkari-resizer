@@ -276,6 +276,11 @@ section {
     border-radius: var(--radius-std);
 }
 
+[data-theme="dark"] .preview-container {
+    background: #2c2c2c;
+    border: 1px solid #444;
+}
+
 #image-preview {
     max-width: 100%;
     max-height: 200px;
