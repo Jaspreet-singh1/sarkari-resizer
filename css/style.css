@@ -257,7 +257,7 @@ section {
 [data-theme="dark"] .radio-chip {
     background: #2c2c2c;
     border-color: #444;
-    color: var(--text-muted);
+    color: var(--text-main);
 }
 
 [data-theme="dark"] .radio-chip:has(input:checked) {
