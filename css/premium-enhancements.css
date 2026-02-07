@@ -1,0 +1,261 @@
+/* ========================================
+   PREMIUM DESIGN ENHANCEMENTS
+======================================== */
+
+/* Animated Gradient Background for Hero - DARKER for visibility */
+.hero {
+    position: relative;
+    background: linear-gradient(135deg, #4338ca 0%, #581c87 50%, #a21caf 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+    padding: 3rem 1.5rem;
+    border-radius: 24px;
+    margin: 2rem 0;
+    box-shadow: 0 20px 60px rgba(67, 56, 202, 0.4);
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+}
+
+.hero>* {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Hero Heading with Strong Text Shadow for Visibility */
+section.hero h1,
+.hero h1 {
+    color: #ffffff !important;
+    font-size: 2.2rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+section.hero .subtitle,
+section.hero p.subtitle,
+.hero .subtitle,
+.hero p.subtitle {
+    color: #ffffff !important;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 500;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Form Badges with Glassmorphism */
+.form-badges {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+}
+
+.form-badges span {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-badges span:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Premium Upload Button */
+.upload-area {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-area::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+    animation: rotate 4s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.upload-area:hover::before {
+    opacity: 1;
+}
+
+.upload-area:hover {
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Main Upload Button with Glow */
+.btn-primary-large {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding: 1.2rem 3rem;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-primary-large::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.btn-primary-large:hover::before {
+    left: 100%;
+}
+
+.btn-primary-large:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.5);
+}
+
+.btn-primary-large:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Trust Badges - White for hero, dark for upload area */
+section.hero>.trust-badge,
+.hero>.trust-badge,
+section.hero>p.trust-badge,
+.hero>p.trust-badge {
+    color: #ffffff !important;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+section.hero>.trust-badge-small,
+.hero>.trust-badge-small,
+section.hero>p.trust-badge-small,
+.hero>p.trust-badge-small {
+    color: #ffffff !important;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Trust badges inside upload area (white background) - should be DARK */
+.upload-area .trust-badge,
+.upload-area p.trust-badge {
+    color: #5f6368 !important;
+    text-shadow: none !important;
+}
+
+.upload-area .trust-badge-small,
+.upload-area p.trust-badge-small {
+    color: #5f6368 !important;
+    text-shadow: none !important;
+}
+
+/* Tool Cards Enhancement */
+.tool-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    border-color: var(--primary);
+}
+
+.tool-card h3 {
+    background: linear-gradient(135deg, var(--primary), #764ba2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+/* Section Headers with Accent */
+section h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--primary), #764ba2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Add Subtle Animations to Everything */
+* {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
