@@ -329,21 +329,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ctx.drawImage(img, 0, 0, width, height);
 
+        // Apply Unsharp Mask (Sharpening) to reduce blur from resizing
+        sharpenCanvas(ctx, width, height, 0.2); // 20% sharpening strength
+
         let minQ = 0.1;
         let maxQ = 1.0;
         let bestBlob = null;
 
         // Strategy:
-        // If Auto-Resize is ON: We refuse to drop quality below 0.7 (Sharp). If it doesn't fit, we shrink dimensions.
-        // If Auto-Resize is OFF: We drop quality as low as needed (down to 0.1) to fit the size.
+        // We prefer a smaller, high-quality image over a large, pixelated one.
+        // If Auto-Resize is ON: We refuse to drop quality below 0.6 (Sharp). 
 
-        let minAcceptableQuality = autoResize ? 0.7 : 0.1;
+        let minAcceptableQuality = autoResize ? 0.6 : 0.1;
 
-        // Binary search for quality
+        // Binary search for quality -- but only down to minAcceptableQuality
         for (let i = 0; i < 7; i++) {
             const midQ = (minQ + maxQ) / 2;
-            const blob = await getCanvasBlob(canvas, type, midQ);
 
+            // If we are below acceptable quality and auto-resize is on, stop searching low quality
+            if (autoResize && midQ < minAcceptableQuality) {
+                minQ = midQ;
+                continue;
+            }
+
+            const blob = await getCanvasBlob(canvas, type, midQ);
             const sizeKB = blob.size / 1024;
 
             if (sizeKB <= maxKB) {
@@ -354,31 +363,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // If Auto-Resize is ON and we didn't find a good blob OR the best blob is too low quality (implied by maxQ dropping)
-        // We start shrinking dimensions
+        // If Auto-Resize is ON and we didn't find a good blob OR the best blob is too low quality
         if (autoResize) {
-            // Check if our best result so far is actually acceptable in quality?
-            // Actually, simply checking if we found a fit isn't enough. We want a fit at HIGH quality.
+            const currentBlobSize = bestBlob ? bestBlob.size / 1024 : 99999;
+            // If we failed to find a blob, OR the best one we found is still too big
+            if (!bestBlob || currentBlobSize > maxKB) {
 
-            // Let's try a smarter loop:
-            // If the blob found above is decent quality, great.
-            // If we had to drop quality too low to fit, let's reset and resize.
+                // Smart Scaling Loop: Shrink dimensions until we fit at HIGH quality (0.7)
+                let scale = 0.95;
+                let attempts = 0;
 
-            // Re-eval: Just restart with iterative downscaling if the "Fixed Dimension" attempt didn't yield a high-quality result.
-            // Simplified: If (bestBlob is huge OR quality had to go < 0.6), start scaling down.
-
-            // Interactive Downscaling Loop
-            let scale = 0.95;
-            let attempts = 0;
-
-            // While (File is too big OR Quality is too bad)
-            // But we don't know the quality of bestBlob easily.
-            // Heuristic: If we couldn't fit it at Q=0.7, we resize.
-
-            // Test Q=0.7 at current size
-            const blobHighQ = await getCanvasBlob(canvas, type, 0.7);
-            if ((blobHighQ.size / 1024) > maxKB) {
-                // It's too big at good quality. Shrink dimensions!
                 while (attempts < 20) {
                     const newW = Math.floor(width * scale);
                     const newH = Math.floor(height * scale);
@@ -387,7 +381,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     canvas.width = newW;
                     canvas.height = newH;
+
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+
                     ctx.drawImage(img, 0, 0, newW, newH);
+                    sharpenCanvas(ctx, newW, newH, 0.25); // Slightly stronger sharpen for smaller images
 
                     // Try at decent quality (0.75)
                     const blob = await getCanvasBlob(canvas, type, 0.75);
@@ -402,10 +401,51 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             // Logic when Auto-resize is OFF is already handled by the binary search above.
-            // It found the best specific quality for the fixed size.
         }
 
         return bestBlob;
+    }
+
+    // New Sharpening Function (Convolution Filter)
+    function sharpenCanvas(ctx, w, h, mix) {
+        const weights = [0, -1, 0, -1, 5, -1, 0, -1, 0];
+        const katet = Math.round(Math.sqrt(weights.length));
+        const half = (katet * 0.5) | 0;
+        const dstData = ctx.createImageData(w, h);
+        const dstBuff = dstData.data;
+        const srcBuff = ctx.getImageData(0, 0, w, h).data;
+        let y = h;
+
+        while (y--) {
+            let x = w;
+            while (x--) {
+                const sy = y;
+                const sx = x;
+                const dstOff = (y * w + x) * 4;
+                let r = 0, g = 0, b = 0, a = 0;
+
+                for (let cy = 0; cy < katet; cy++) {
+                    for (let cx = 0; cx < katet; cx++) {
+                        const scy = sy + cy - half;
+                        const scx = sx + cx - half;
+                        if (scy >= 0 && scy < h && scx >= 0 && scx < w) {
+                            const srcOff = (scy * w + scx) * 4;
+                            const wt = weights[cy * katet + cx];
+                            r += srcBuff[srcOff] * wt;
+                            g += srcBuff[srcOff + 1] * wt;
+                            b += srcBuff[srcOff + 2] * wt;
+                            a += srcBuff[srcOff + 3] * wt;
+                        }
+                    }
+                }
+
+                dstBuff[dstOff] = r * mix + srcBuff[dstOff] * (1 - mix);
+                dstBuff[dstOff + 1] = g * mix + srcBuff[dstOff + 1] * (1 - mix);
+                dstBuff[dstOff + 2] = b * mix + srcBuff[dstOff + 2] * (1 - mix);
+                dstBuff[dstOff + 3] = srcBuff[dstOff + 3];
+            }
+        }
+        ctx.putImageData(dstData, 0, 0);
     }
 
     function getCanvasBlob(canvas, type, quality) {
