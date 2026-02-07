@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sarkari-resizer-v2';
+const CACHE_NAME = 'sarkari-resizer-v3';
 const ASSETS = [
     './',
     './index.html',
@@ -17,12 +17,28 @@ const ASSETS = [
     'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
 ];
 
-// Install Event: Cache Files
+// 1. Install Event: Cache Files
 self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => cache.addAll(ASSETS))
     );
+    self.skipWaiting(); // Force activate new SW
+});
+
+// 2. Activate Event: Clean Old Caches
+self.addEventListener('activate', (e) => {
+    e.waitUntil(
+        caches.keys().then((keyList) => {
+            return Promise.all(keyList.map((key) => {
+                if (key !== CACHE_NAME) {
+                    console.log('Removing old cache', key);
+                    return caches.delete(key);
+                }
+            }));
+        })
+    );
+    self.clients.claim(); // Take control immediately
 });
 
 // Fetch Event: Serve from Cache if Offline
