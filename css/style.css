@@ -139,6 +139,88 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.btn-nav-dropdown {
+    background: transparent;
+    color: var(--text-main);
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.2s;
+}
+
+.btn-nav-dropdown:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .btn-nav-dropdown {
+    color: var(--text-main);
+    border-color: #444;
+}
+
+[data-theme="dark"] .btn-nav-dropdown:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: var(--card-bg);
+    min-width: 200px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    z-index: 10000;
+    margin-top: 8px;
+    padding: 8px 0;
+    flex-direction: column;
+}
+
+.dropdown-content.show {
+    display: flex !important;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.dropdown-content a {
+    color: var(--text-main);
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--bg-color);
+    color: var(--primary);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Sections */
 section {
     margin-bottom: 2rem;
@@ -315,6 +397,43 @@ section {
 .footer-links a {
     color: var(--text-muted);
     margin: 0 0.5rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+.tools-nav {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tools-nav a {
+    color: var(--text-main) !important;
+    background: var(--bg-card) !important;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+    display: inline-block;
+    margin: 4px;
+}
+
+.tools-nav a:hover,
+.tools-nav a.active {
+    background: #e8f0fe;
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+[data-theme="dark"] .tools-nav a:hover,
+[data-theme="dark"] .tools-nav a.active {
+    background: rgba(138, 180, 248, 0.15);
 }
 
 /* Custom Input */

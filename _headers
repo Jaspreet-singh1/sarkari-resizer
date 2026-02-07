@@ -1,0 +1,29 @@
+/*
+  X-Robots-Tag: all
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+# Cache static assets for 1 year (Immutable)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache HTML files for 1 hour
+/*.html
+  Cache-Control: public, max-age=3600
+
+# Cache root for 1 hour
+/
+  Cache-Control: public, max-age=3600
+
+# Cache Manifest and Service Worker heavily to rely on SW logic?
+# Actually, Service Worker should NOT be cached too aggressively or updates break.
+/service-worker.js
+  Cache-Control: no-cache

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Resizer - 10KB, 20KB Online for Free</title>
+    <meta name="description"
+        content="Free Signature Resizer & Compressor. Reduce size of scanned signature to 10kb, 20kb, 50kb for SSC, UPSC, Bank, PAN Card forms.">
+    <meta name="keywords"
+        content="signature resizer, signature compressor, resize signature to 20kb, signature cropper, pan card signature size, sign resizer online">
+    <meta name="theme-color" content="#1a73e8">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sarkariresizer.app/signature-resizer.html">
+    <meta property="og:title" content="Signature Resizer - 10KB to 20KB Tool">
+    <meta property="og:description" content="Convert scanned signature to perfect 10-20 KB size for any online form.">
+    <meta property="og:image" content="https://sarkariresizer.app/assets/og-image.png">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sarkariresizer.app/signature-resizer.html">
+
+    <!-- CSP -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://cdnjs.cloudflare.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline';">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=1.1">
+    <link rel="stylesheet" href="css/seo.css?v=1.1">
+    <link rel="stylesheet" href="css/preview.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('Service Worker Registered'))
+                .catch((err) => console.log('SW Failed:', err));
+        }
+    </script>
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Signature Resizer",
+      "applicationCategory": "PhotoEditor",
+      "operatingSystem": "Web",
+      "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "INR" },
+      "description": "Resize scanned signatures for online forms. Reduce size to 10kb-20kb.",
+      "url": "https://sarkariresizer.app/signature-resizer.html",
+      "image": "https://sarkariresizer.app/assets/favicon-512.png"
+    }
+    </script>
+
+    <!-- Adsense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444370488584201"
+        crossorigin="anonymous">
+        </script>
+
+    <!-- Analytics -->
+    <script src="js/google-analytics.js"></script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="logo-container">
+            <a href="/" style="text-decoration: none; color: inherit;">
+                <div class="logo"><span class="brand-name">Sign</span> <span class="badge">Resizer</span></div>
+            </a>
+            <div class="tagline">For all Online Forms</div>
+        </div>
+        <nav style="display: flex; align-items: center; gap: 0.8rem;">
+            <div class="dropdown">
+                <button class="btn-nav-dropdown" id="tools-dropdown-btn">Tools ▾</button>
+                <div class="dropdown-content" id="tools-dropdown-content">
+                    <a href="/ssc-photo-resizer.html">SSC Resizer</a>
+                    <a href="/upsc-photo-resizer.html">UPSC Resizer</a>
+                    <a href="/ibps-photo-resizer.html">IBPS Resizer</a>
+                    <a href="/railways-photo-resizer.html">Railways</a>
+                    <a href="/neet-photo-resizer.html">NEET/JEE</a>
+                    <a href="/passport-photo-resizer.html">Passport</a>
+                    <a href="/signature-resizer.html">Signature</a>
+                </div>
+            </div>
+            <button id="share-btn" class="btn-share" aria-label="Share App">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                    <polyline points="16 6 12 2 8 6"></polyline>
+                    <line x1="12" y1="2" x2="12" y2="15"></line>
+                </svg>
+                Share
+            </button>
+            <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">🌙</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Signature Resizer Online (10-20KB)</h1>
+            <p class="subtitle">Compress scanned signature for SSC, PAN, Bank & Exams.</p>
+            <div class="form-badges">
+                <span>10-20 KB</span>
+                <span>SSC Sign</span>
+                <span>PAN Card</span>
+                <span>Bank Sign</span>
+            </div>
+
+            <!-- Ad Unit 1 Placeholder -->
+            <div class="ad-slot ad-top">
+                <div class="ad-placeholder"></div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="drop-zone">
+                <input type="file" id="file-input" accept="image/png, image/jpeg, image/jpg" hidden>
+                <button class="btn-primary-large" id="select-btn">Upload Signature</button>
+                <p class="trust-badge">🔒 Your signature is safe.</p>
+            </div>
+        </section>
+
+        <!-- Editor Section -->
+        <section id="editor-section" class="editor hidden">
+            <div class="preview-container">
+                <img id="image-preview" src="" alt="Uploaded Photo Preview">
+                <p id="original-size">Original: 0 KB</p>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>Target Size</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="size" value="10"> 10 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="20" checked> 20 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="50"> 50 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
+                    </div>
+                    <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
+                        min="10" max="1000">
+                </div>
+
+                <div class="control-group">
+                    <label>Dimensions</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="width-input" placeholder="Width (px)" class="form-input">
+                        <input type="number" id="height-input" placeholder="Height (px)" class="form-input">
+                    </div>
+                    <label class="checkbox-label"
+                        style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-main); cursor: pointer;">
+                        <input type="checkbox" id="auto-resize-check" checked
+                            style="accent-color: var(--primary); width: 16px; height: 16px;">
+                        Auto-adjust dimensions for Signatures ✨
+                    </label>
+                </div>
+
+                <div class="control-group">
+                    <label>Output Format</label>
+                    <div class="format-group">
+                        <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked>
+                            JPEG</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="image/png"> PNG</label>
+                    </div>
+                </div>
+
+                <button id="compress-btn" class="btn-action">Resize Signature</button>
+            </div>
+        </section>
+
+        <!-- Result Section -->
+        <section id="result-section" class="result hidden">
+            <div class="ad-slot ad-mid">
+                <div class="ad-placeholder"></div>
+            </div>
+
+            <div class="success-box">
+                <h3>Signed & Sealed! ✍️</h3>
+                <p class="success-note">Signature ready for upload.</p>
+                <img id="result-image" class="result-preview" src="" alt="Compressed Result" loading="lazy">
+                <p id="final-size-display">New Size: -- KB</p>
+                <div class="download-actions">
+                    <a id="download-link" class="btn-download" download="signature.jpg">Download Image</a>
+                    <button id="reset-btn" class="btn-text">Resize Another</button>
+                    <a href="/" class="btn-text">Go Home</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Content -->
+        <section class="seo-content" id="help">
+            <h2>Signature Resizing Tips</h2>
+            <p>Scanning signatures can be tricky. Here is how to get the best result:</p>
+
+            <div class="pro-tips">
+                <div class="tip-card"><b>Use Black Ink:</b> Always sign with a thick Black Pen on plain white paper.
+                    Blue ink often looks faded after scanning.</div>
+                <div class="tip-card"><b>Good Light:</b> Take the photo in bright daylight. Avoid shadows from your hand
+                    or phone.</div>
+                <div class="tip-card"><b>Crop Tight:</b> Crop the image close to the signature, removing extra white
+                    space.</div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2026 Sarkari Photo Resizer. <a href="/">Go to Home</a></p>
+        <div class="footer-links tools-nav">
+            <a href="/ssc-photo-resizer.html">SSC</a>
+            <a href="/upsc-photo-resizer.html">UPSC</a>
+            <a href="/ibps-photo-resizer.html">IBPS</a>
+            <a href="/railways-photo-resizer.html">Railways</a>
+            <a href="/neet-photo-resizer.html">NEET</a>
+            <a href="/passport-photo-resizer.html">Passport</a>
+            <a href="/signature-resizer.html" class="active">Signature</a>
+        </div>
+        <div class="footer-links">
+            <a href="/privacy">Privacy</a>
+            <a href="/disclaimer">Disclaimer</a>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

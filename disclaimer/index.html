@@ -5,14 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disclaimer - Sarkari Photo Resizer</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css?v=1.1">
 </head>
 
 <body>
     <header class="app-header">
         <div class="logo"><a href="/" style="text-decoration: none; color: inherit;">Sarkari <span
                     class="badge">Resizer</span></a></div>
-        <nav><a href="/" class="btn-nav">Home</a></nav>
+        <nav style="display: flex; align-items: center; gap: 0.8rem;">
+            <div class="dropdown">
+                <button class="btn-nav-dropdown" id="tools-dropdown-btn">Tools ▾</button>
+                <div class="dropdown-content" id="tools-dropdown-content">
+                    <a href="/ssc-photo-resizer.html">SSC Resizer</a>
+                    <a href="/upsc-photo-resizer.html">UPSC Resizer</a>
+                    <a href="/ibps-photo-resizer.html">IBPS Resizer</a>
+                    <a href="/railways-photo-resizer.html">Railways</a>
+                    <a href="/neet-photo-resizer.html">NEET/JEE</a>
+                    <a href="/passport-photo-resizer.html">Passport</a>
+                    <a href="/signature-resizer.html">Signature</a>
+                </div>
+            </div>
+            <a href="/" class="btn-nav">Home</a>
+        </nav>
     </header>
 
     <main class="container">
@@ -26,6 +40,42 @@
                 UPSC, etc.).</p>
         </section>
     </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2026 Sarkari Photo Resizer. <a href="/">Go to Home</a></p>
+        <div class="footer-links tools-nav">
+            <a href="/ssc-photo-resizer.html">SSC</a>
+            <a href="/upsc-photo-resizer.html">UPSC</a>
+            <a href="/ibps-photo-resizer.html">IBPS</a>
+            <a href="/railways-photo-resizer.html">Railways</a>
+            <a href="/neet-photo-resizer.html">NEET</a>
+            <a href="/passport-photo-resizer.html">Passport</a>
+            <a href="/signature-resizer.html">Signature</a>
+        </div>
+        <div class="footer-links">
+            <a href="/privacy/">Privacy</a>
+            <a href="/disclaimer/">Disclaimer</a>
+        </div>
+    </footer>
+
+    <script>
+        // Dropdown Logic
+        const dropdownBtn = document.getElementById('tools-dropdown-btn');
+        const dropdownContent = document.getElementById('tools-dropdown-content');
+
+        if (dropdownBtn && dropdownContent) {
+            dropdownBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdownContent.classList.toggle('show');
+            });
+
+            window.addEventListener('click', (e) => {
+                if (!dropdownBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
+                    dropdownContent.classList.remove('show');
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

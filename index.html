@@ -37,8 +37,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/seo.css">
+    <link rel="stylesheet" href="css/style.css?v=1.1">
+    <link rel="stylesheet" href="css/seo.css?v=1.1">
     <link rel="stylesheet" href="css/preview.css">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
@@ -137,10 +137,12 @@
     </script>
 
     <!-- Adsense-->
-
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2444370488584201"
         crossorigin="anonymous">
         </script>
+
+    <!-- Analytics -->
+    <script src="js/google-analytics.js"></script>
 </head>
 
 <body>
@@ -152,6 +154,20 @@
             <div class="tagline">Sarkari Kaam, Ab Hoga Aasaan</div>
         </div>
         <nav style="display: flex; align-items: center; gap: 0.8rem;">
+            <!-- Dropdown -->
+            <div class="dropdown">
+                <button class="btn-nav-dropdown" id="tools-dropdown-btn">Tools ▾</button>
+                <div class="dropdown-content" id="tools-dropdown-content">
+                    <a href="/ssc-photo-resizer.html">SSC Resizer</a>
+                    <a href="/upsc-photo-resizer.html">UPSC Resizer</a>
+                    <a href="/ibps-photo-resizer.html">IBPS Resizer</a>
+                    <a href="/railways-photo-resizer.html">Railways</a>
+                    <a href="/neet-photo-resizer.html">NEET/JEE</a>
+                    <a href="/passport-photo-resizer.html">Passport</a>
+                    <a href="/signature-resizer.html">Signature</a>
+                </div>
+            </div>
+
             <button id="share-btn" class="btn-share" aria-label="Share App">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -278,26 +294,26 @@
                 signature upload. Specifically:</p>
 
             <div class="exam-grid">
-                <div class="exam-card">
+                <a href="/ssc-photo-resizer.html" class="exam-card" style="text-decoration: none; color: inherit;">
                     <span class="exam-name">SSC Exams</span>
                     <div class="exam-detail"><strong>Photo:</strong> 20 - 50 KB</div>
                     <div class="exam-detail"><strong>Sign:</strong> 10 - 20 KB</div>
-                </div>
-                <div class="exam-card">
+                </a>
+                <a href="/upsc-photo-resizer.html" class="exam-card" style="text-decoration: none; color: inherit;">
                     <span class="exam-name">UPSC Civil Services</span>
                     <div class="exam-detail"><strong>Photo:</strong> 20 - 300 KB</div>
                     <div class="exam-detail"><strong>Sign:</strong> 20 - 300 KB</div>
-                </div>
-                <div class="exam-card">
+                </a>
+                <a href="/ibps-photo-resizer.html" class="exam-card" style="text-decoration: none; color: inherit;">
                     <span class="exam-name">IBPS / Bank</span>
                     <div class="exam-detail"><strong>Photo:</strong> 20 - 50 KB</div>
                     <div class="exam-detail"><strong>Sign:</strong> 10 - 20 KB</div>
-                </div>
-                <div class="exam-card">
+                </a>
+                <a href="/railways-photo-resizer.html" class="exam-card" style="text-decoration: none; color: inherit;">
                     <span class="exam-name">Railways (RRB)</span>
                     <div class="exam-detail"><strong>Photo:</strong> 15 - 40 KB</div>
                     <div class="exam-detail"><strong>Sign:</strong> 10 - 20 KB</div>
-                </div>
+                </a>
             </div>
 
             <div class="pro-tips">
@@ -402,6 +418,15 @@
 
     <footer class="app-footer">
         <p>&copy; 2026 Sarkari Photo Resizer. Free & Secure.</p>
+        <div class="footer-links tools-nav">
+            <a href="/ssc-photo-resizer.html">SSC</a>
+            <a href="/upsc-photo-resizer.html">UPSC</a>
+            <a href="/ibps-photo-resizer.html">IBPS</a>
+            <a href="/railways-photo-resizer.html">Railways</a>
+            <a href="/neet-photo-resizer.html">NEET</a>
+            <a href="/passport-photo-resizer.html">Passport</a>
+            <a href="/signature-resizer.html">Signature</a>
+        </div>
         <div class="footer-links">
             <a href="/privacy">Privacy</a>
             <a href="/disclaimer">Disclaimer</a>

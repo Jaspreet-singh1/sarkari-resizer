@@ -71,6 +71,24 @@ document.addEventListener('DOMContentLoaded', () => {
     shareBtn.addEventListener('click', handleShare);
     if (shareMoreBtn) shareMoreBtn.addEventListener('click', handleShare);
 
+    // Dropdown Logic
+    const dropdownBtn = document.getElementById('tools-dropdown-btn');
+    const dropdownContent = document.getElementById('tools-dropdown-content');
+
+    if (dropdownBtn && dropdownContent) {
+        dropdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close when clicking outside
+        window.addEventListener('click', (e) => {
+            if (!dropdownBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
+                dropdownContent.classList.remove('show');
+            }
+        });
+    }
+
     // Event Listeners
     selectBtn.addEventListener('click', () => fileInput.click());
 
