@@ -329,8 +329,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ctx.drawImage(img, 0, 0, width, height);
 
-        // Apply Unsharp Mask (Sharpening) to reduce blur from resizing
-        sharpenCanvas(ctx, width, height, 0.2); // 20% sharpening strength
+        // Adaptive Sharpening based on Scale Factor
+        // If we are Upscaling (scale > 1), we need MORE sharpening to fix blur.
+        // If we are Downscaling (scale < 1), we need LESS sharpening to avoid aliasing artifacts.
+
+        const srcArea = img.width * img.height;
+        const dstArea = width * height;
+        const scale = Math.sqrt(dstArea / srcArea);
+
+        let sharpenAmount = 0.20; // Default
+
+        if (scale > 1.2) {
+            sharpenAmount = 0.35; // Stronger for Upscaling
+        } else if (scale < 0.5) {
+            sharpenAmount = 0.12; // Softer for heavy downscaling
+        }
+
+        sharpenCanvas(ctx, width, height, sharpenAmount);
 
         let minQ = 0.1;
         let maxQ = 1.0;
