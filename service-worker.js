@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sarkari-resizer-v3';
+const CACHE_NAME = 'sarkari-resizer-v4'; // CRITICAL: Bumped for crop feature
 const ASSETS = [
     './',
     './index.html',
@@ -12,7 +12,9 @@ const ASSETS = [
     './css/style.css',
     './css/seo.css',
     './css/preview.css',
+    './css/cropper.min.css', // NEW: Crop feature CSS
     './js/script.js',
+    './js/cropper.min.js', // NEW: Crop feature JS
     './assets/favicon.svg',
     'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
 ];
