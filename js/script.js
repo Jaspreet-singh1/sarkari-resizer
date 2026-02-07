@@ -96,13 +96,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     compressBtn.addEventListener('click', processImage);
 
-    // Toggle Custom Input
+    // Toggle Custom Input & Handle Presets
     sizeRadios.forEach(radio => {
         radio.addEventListener('change', (e) => {
+            const widthInput = document.getElementById('width-input');
+            const heightInput = document.getElementById('height-input');
+
+            // 1. Handle Custom Display
             if (e.target.value === 'custom') {
                 customSizeInput.classList.remove('hidden');
             } else {
                 customSizeInput.classList.add('hidden');
+            }
+
+            // 2. Handle Dimension Presets
+            const presetWidth = e.target.dataset.width;
+            const presetHeight = e.target.dataset.height;
+
+            if (presetWidth && presetHeight) {
+                widthInput.value = presetWidth;
+                heightInput.value = presetHeight;
+                // Optional: Flash fields to show update?
+            } else if (e.target.value !== 'custom') {
+                // If switching to a non-custom preset that HAS NO dimensions (rare), maybe clear?
+                // But for now, let's keep previous values or clearer if we want specific behavior.
+                // Better safety: Don't clear if user typed something manually unless they specifically clicked a preset with dims.
             }
         });
     });

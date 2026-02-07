@@ -143,8 +143,10 @@
                 <div class="control-group">
                     <label>SSC Target Size</label>
                     <div class="radio-group">
-                        <label class="radio-chip"><input type="radio" name="size" value="20"> 20 KB (Sign)</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="50" checked> 50 KB
+                        <label class="radio-chip"><input type="radio" name="size" value="20" data-width="400"
+                                data-height="200"> 20 KB (Sign)</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="50" checked data-width="350"
+                                data-height="450"> 50 KB
                             (Photo)</label>
                         <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
                     </div>
@@ -170,7 +172,9 @@
                     <label>Output Format</label>
                     <div class="format-group">
                         <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked> JPEG
-                            (SSC Only)</label>
+                            (Recommended)</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="image/png"> PNG</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="application/pdf"> PDF</label>
                     </div>
                 </div>
 
@@ -246,7 +250,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=2.0"></script>
 </body>
 
 </html>

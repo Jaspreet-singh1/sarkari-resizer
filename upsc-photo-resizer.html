@@ -142,10 +142,13 @@
                 <div class="control-group">
                     <label>UPSC Target Size</label>
                     <div class="radio-group">
-                        <label class="radio-chip"><input type="radio" name="size" value="50" checked> 50 KB
+                        <label class="radio-chip"><input type="radio" name="size" value="50" checked data-width="350"
+                                data-height="350"> 50 KB
                             (Safe)</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="100"> 100 KB</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="300"> 300 KB (Max)</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="100" data-width="350"
+                                data-height="350"> 100 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="300" data-width="350"
+                                data-height="350"> 300 KB (Max)</label>
                         <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
                     </div>
                     <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
@@ -170,7 +173,9 @@
                     <label>Output Format</label>
                     <div class="format-group">
                         <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked> JPEG
-                            (UPSC Specific)</label>
+                            (Recommended)</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="image/png"> PNG</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="application/pdf"> PDF</label>
                     </div>
                 </div>
 
@@ -245,7 +250,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=2.0"></script>
 </body>
 
 </html>
