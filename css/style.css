@@ -777,6 +777,112 @@ section {
     }
 }
 
-.flash-update {
-    animation: highlight-input 0.6s ease-out;
+/* Crop Modal Styles */
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 10001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: auto;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    width: 90%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    /* Ensure it fits on mobile screens */
+}
+
+.modal-content h3 {
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-main);
+}
+
+.img-container {
+    width: 100%;
+    height: 60vh;
+    /* Dedicated height for cropping area */
+    background-color: #f0f0f0;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.img-container img {
+    max-width: 100%;
+    display: block;
+    /* Important for Cropper.js */
+}
+
+.crop-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+.crop-controls button {
+    flex: 1;
+    padding: 0.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    border: none;
+    transition: transform 0.1s;
+}
+
+.crop-controls button:active {
+    transform: scale(0.98);
+}
+
+#rotate-btn {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+#crop-confirm-btn {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 10px rgba(26, 115, 232, 0.3);
+}
+
+/* Mobile Tweaks */
+@media (max-width: 480px) {
+    .modal-content {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        padding: 1rem;
+    }
+
+    .img-container {
+        height: 70vh;
+        /* More space for image on mobile */
+    }
+
+    .crop-controls {
+        padding-bottom: 1rem;
+    }
 }

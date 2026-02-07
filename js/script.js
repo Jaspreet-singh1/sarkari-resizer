@@ -170,41 +170,20 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo(0, 0);
     });
 
-    // 1. Handle File Selection
-    function handleFileSelect(e) {
+    // CropperJS variables
+    let cropper = null;
+    const cropModal = document.getElementById('crop-modal');
+    const cropImage = document.getElementById('crop-image');
+    const cropConfirmBtn = document.getElementById('crop-confirm-btn');
+    const rotateBtn = document.getElementById('rotate-btn');
+    let originalFileName = ''; // Store original filename for download
+
+    // Handle File Selection (Made Async for validation)
+    async function handleFileSelect(e) {
         const file = e.target.files[0];
         if (!file) return;
 
         // Security: Verify Magic Number (Simple Check)
-        verifyImageFile(file).then(isValid => {
-            if (!isValid) {
-                alert('Invalid file format. Please upload a specific JPEG or PNG image.');
-                return;
-            }
-
-            currentFile = file;
-            const sizeKB = (file.size / 1024).toFixed(2);
-            originalSizeText.textContent = `Original: ${sizeKB} KB`;
-
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                imagePreview.src = event.target.result;
-                originalImage.src = event.target.result;
-                editorSection.classList.remove('hidden');
-                resultSection.classList.add('hidden'); // bit of cleanup
-
-                // Scroll to editor
-                setTimeout(() => {
-                    editorSection.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-            };
-            reader.readAsDataURL(file);
-        });
-    }
-
-    // 2. Security: Magic Number Check
-    async function verifyImageFile(file) {
-        // Read first 4 bytes
         const buffer = await file.slice(0, 4).arrayBuffer();
         const header = new Uint8Array(buffer);
         let headerHex = "";
@@ -212,17 +191,169 @@ document.addEventListener('DOMContentLoaded', () => {
             headerHex += header[i].toString(16).toUpperCase();
         }
 
-        // JPEG: FFD8...
-        // PNG: 89504E47
-        if (headerHex.startsWith("FFD8")) return true;
-        if (headerHex === "89504E47") return true;
+        // JPEG: FFD8... PNG: 89504E47...
+        let isValid = false;
+        if (headerHex.startsWith("FFD8")) isValid = true;
+        if (headerHex === "89504E47") isValid = true;
 
-        return false;
+        if (!isValid) {
+            alert('Invalid file format. Please upload a valid JPEG or PNG image.');
+            return;
+        }
+
+        currentFile = file;
+        const sizeKB = (file.size / 1024).toFixed(2);
+        originalSizeText.textContent = `Original: ${sizeKB} KB`;
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            // Open Crop Modal instead of Editor immediately
+            openCropModal(event.target.result);
+        };
+        reader.readAsDataURL(file);
     }
+
+    function openCropModal(imageSrc) {
+        // Check if Cropper.js library is loaded
+        if (typeof Cropper === 'undefined') {
+            alert('ERROR: Cropper.js library failed to load!\n\nThis might be due to:\n- Ad blocker blocking CDN\n- Network connection issue\n- Browser extension blocking scripts\n\nPlease disable ad blockers and refresh the page.');
+            cropModal.classList.remove('hidden');
+            const loadingText = document.getElementById('crop-loading');
+            if (loadingText) loadingText.textContent = 'ERROR: Cropper.js library not loaded. Please disable ad blockers.';
+            return;
+        }
+
+        // Show Modal, Hide Upload Area
+        cropModal.classList.remove('hidden');
+        document.querySelector('.upload-area').classList.add('hidden');
+
+        // Show loading text
+        const loadingText = document.getElementById('crop-loading');
+        if (loadingText) {
+            loadingText.style.display = 'block';
+            loadingText.textContent = 'Loading image...';
+        }
+
+        // Destroy previous cropper if exists
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
+
+        // Set image source
+        cropImage.src = imageSrc;
+
+        // CRITICAL: Wait for image to load before initializing Cropper
+        cropImage.onload = function () {
+            if (loadingText) loadingText.textContent = 'Initializing crop tool...';
+
+            try {
+                // Initialize Cropper with proper settings
+                cropper = new Cropper(cropImage, {
+                    viewMode: 1,              // Restrict crop box to image bounds
+                    dragMode: 'crop',         // 'crop' allows moving crop box
+                    autoCropArea: 0.9,        // 90% initial crop
+                    responsive: true,         // Auto-resize on window change
+                    restore: false,
+                    guides: true,             // Show grid lines
+                    center: true,             // Show center indicator
+                    highlight: true,          // Show highlighted crop area
+                    cropBoxMovable: true,     // Allow crop box dragging
+                    cropBoxResizable: true,   // Allow crop box resizing
+                    toggleDragModeOnDblclick: false,
+                    minContainerHeight: 300,
+                    background: true,         // Show grid background
+                    modal: true,              // Show black modal above image
+                    zoomable: true,           // Enable zoom
+                    zoomOnWheel: true,        // Zoom with mouse wheel
+                    zoomOnTouch: true,        // Zoom with pinch on mobile
+                    ready: function () {
+                        // This fires when Cropper is fully ready
+                        if (loadingText) loadingText.style.display = 'none';
+                        alert('SUCCESS! Crop tool is ready.\n\nYou should now see:\n✓ Semi-transparent crop box\n✓ Dotted grid lines\n✓ Resize handles on corners\n\nTry dragging the corners to resize the crop area!');
+                    }
+                });
+
+            } catch (error) {
+                console.error('Failed to initialize Cropper:', error);
+                alert('ERROR initializing Cropper:\n' + error.message);
+                if (loadingText) loadingText.textContent = 'Failed to load crop tool: ' + error.message;
+            }
+        };
+
+        cropImage.onerror = function () {
+            console.error('Failed to load image');
+            alert('Failed to load image. Please try again.');
+            if (loadingText) loadingText.textContent = 'Failed to load image';
+        };
+    }
+
+
+    // Rotate Button  
+    rotateBtn.addEventListener('click', () => {
+        console.log('Rotate button clicked, cropper:', cropper);
+        if (cropper) {
+            cropper.rotate(90);
+            console.log('Image rotated 90 degrees');
+            // Visual confirmation without needing console
+            rotateBtn.textContent = '✓ Rotated';
+            setTimeout(() => {
+                rotateBtn.textContent = 'Rotate 90° ↻';
+            }, 1000);
+        } else {
+            console.error('Cropper not initialized!');
+            alert('Cropper is not ready yet. Please wait for "SUCCESS" message.');
+        }
+    });
+
+    // Confirm Crop
+    cropConfirmBtn.addEventListener('click', () => {
+        if (!cropper) return;
+
+        // Get cropped canvas
+        const canvas = cropper.getCroppedCanvas({
+            maxWidth: 4096,
+            maxHeight: 4096,
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
+        });
+
+        if (!canvas) return;
+
+        // Convert to Blob and load into Editor
+        canvas.toBlob((blob) => {
+            const url = URL.createObjectURL(blob);
+
+            // Load into Main Editor
+            originalImage.src = url;
+            imagePreview.src = url;
+
+            // Set Quality defaults (if not set)
+            // qualitySlider logic if needed, currently implied by processImage default
+
+            // Show Editor, Hide Modal
+            cropModal.classList.add('hidden');
+            editorSection.classList.remove('hidden');
+            resultSection.classList.add('hidden');
+
+            // Scroll to Editor
+            setTimeout(() => {
+                editorSection.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+
+            // Clean up
+            cropper.destroy();
+            cropper = null;
+
+            // Don't auto-compress - let user select presets first
+            // User can manually click "Resize & Compress" button when ready
+
+        }, 'image/jpeg', 1.0); // High quality intermediate
+    });
 
     // 3. Process Image (Core Logic)
     function processImage() {
-        if (!currentFile) return;
+        if (!originalImage.src) return;
 
         const targetKB = getTargetSize();
         const targetFormat = getTargetFormat();
@@ -252,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const doc = new jsPDF({
                             orientation: originalImage.width > originalImage.height ? 'l' : 'p',
                             unit: 'px',
-                            format: [originalImage.width, originalImage.height] // Match page size to image
+                            format: [originalImage.width, originalImage.height]
                         });
 
                         doc.addImage(base64data, 'JPEG', 0, 0, originalImage.width, originalImage.height);

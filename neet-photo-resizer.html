@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="css/style.css?v=1.1">
     <link rel="stylesheet" href="css/seo.css?v=1.1">
     <link rel="stylesheet" href="css/preview.css">
+    <link rel="stylesheet" href="css/cropper.min.css">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -131,6 +132,20 @@
                 <p class="trust-badge">🔒 Secure for students.</p>
             </div>
         </section>
+
+        <!-- Crop Modal -->
+        <div id="crop-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3>Adjust Your Photo</h3>
+                <div class="img-container">
+                    <img id="crop-image" src="" alt="Crop Preview">
+                </div>
+                <div class="crop-controls">
+                    <button id="rotate-btn" class="btn-secondary">Rotate 90° ↻</button>
+                    <button id="crop-confirm-btn" class="btn-primary">Crop & Continue</button>
+                </div>
+            </div>
+        </div>
 
         <!-- Editor Section -->
         <section id="editor-section" class="editor hidden">
@@ -248,6 +263,7 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/cropper.min.js"></script>
     <script src="js/script.js?v=2.2"></script>
 </body>
 
