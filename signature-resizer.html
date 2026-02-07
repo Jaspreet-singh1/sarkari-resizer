@@ -140,14 +140,21 @@
 
             <div class="controls">
                 <div class="control-group">
+                    <label>Signature Type (Dimensions)</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="standard" checked
+                                data-width="400" data-height="200"> Standard (4x2cm)</label>
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="high" data-width="500"
+                                data-height="250"> High Res (5x2.5cm)</label>
+                    </div>
+                </div>
+
+                <div class="control-group">
                     <label>Target Size</label>
                     <div class="radio-group">
-                        <label class="radio-chip"><input type="radio" name="size" value="10" data-width="400"
-                                data-height="200"> 10 KB</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="20" checked data-width="400"
-                                data-height="200"> 20 KB</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="50" data-width="400"
-                                data-height="200"> 50 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="10"> 10 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="20" checked> 20 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="50"> 50 KB</label>
                         <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
                     </div>
                     <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"

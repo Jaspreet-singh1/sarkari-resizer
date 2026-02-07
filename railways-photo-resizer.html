@@ -140,13 +140,20 @@
 
             <div class="controls">
                 <div class="control-group">
+                    <label>Document Type (Dimensions)</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="photo" checked
+                                data-width="350" data-height="450"> Photo (3.5x4.5cm)</label>
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="sign" data-width="400"
+                                data-height="200"> Signature (4x2cm)</label>
+                    </div>
+                </div>
+
+                <div class="control-group">
                     <label>RRB Target Size</label>
                     <div class="radio-group">
-                        <label class="radio-chip"><input type="radio" name="size" value="20" data-width="400"
-                                data-height="200"> 20 KB (Sign)</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="40" checked data-width="350"
-                                data-height="450"> 40 KB
-                            (Photo)</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="20"> 20 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="40" checked> 40 KB</label>
                         <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
                     </div>
                     <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
