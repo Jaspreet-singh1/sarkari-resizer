@@ -10,9 +10,11 @@ Sarkari Resizer is a privacy-first, client-side web application designed to help
 **Live URL:** [https://sarkariresizer.app](https://sarkariresizer.app)
 
 ## ✨ Key Features
+- **Modern Premium UI**: "ExamMint" style dashboard with split-screen layout (Desktop) and mobile-optimized vertical stack.
 - **Smart Resolution Scaling**: Automatically acts as a "Smart Compressor". If a user requests 20KB, it intelligent downscales dimensions to maintain face sharpness instead of just crushing JPEG quality.
 - **100% Privacy**: No server-side processing. All resizing happens locally in the user's browser using HTML5 Canvas.
-- **Cheat Sheet**: Built-in size guide for SSC, UPSC, IBPS, Railways, and more.
+- **Exam Quick-Select**: Built-in size guide for SSC, UPSC, IBPS, Railways, NEET, Passport, and Signature.
+- **User Friendly**: Drag & Drop support, Toast notifications, and "Share on WhatsApp" integration.
 - **PWA Ready**: Works offline and can be installed as an app.
 - **Mobile First**: Optimized for low-end Android devices and poor network conditions.
 
