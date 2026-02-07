@@ -1,0 +1,14 @@
+<!-- Cropper.js with CDN fallback -->
+<script>
+    (function() {
+        var s = document.createElement('script');
+        s.src = 'js/cropper.min.js';
+        s.onerror = function() {
+            var cdn = document.createElement('script');
+            cdn.src = 'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js';
+            cdn.crossOrigin = 'anonymous';
+            document.head.appendChild(cdn);
+        };
+        document.head.appendChild(s);
+    })();
+</script>
