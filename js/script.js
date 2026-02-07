@@ -322,6 +322,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         canvas.width = width;
         canvas.height = height;
+
+        // High Quality + Sharpening Trick
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
         ctx.drawImage(img, 0, 0, width, height);
 
         let minQ = 0.1;
