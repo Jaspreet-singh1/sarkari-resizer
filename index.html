@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="css/style.css?v=1.1">
     <link rel="stylesheet" href="css/seo.css?v=1.1">
     <link rel="stylesheet" href="css/preview.css">
+    <link rel="stylesheet" href="css/cropper.min.css">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -211,6 +212,22 @@
                 <p class="trust-badge-small">Trusted by candidates, students, and professionals.</p>
             </div>
         </section>
+
+        <!-- Crop Modal -->
+        <div id="crop-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3>Adjust Your Photo</h3>
+                <p id="crop-loading" style="text-align: center; color: #888; margin-bottom: 1rem;">Loading crop tool...
+                </p>
+                <div class="img-container">
+                    <img id="crop-image" src="" alt="Crop Preview">
+                </div>
+                <div class="crop-controls">
+                    <button id="rotate-btn" class="btn-secondary">Rotate 90° ↻</button>
+                    <button id="crop-confirm-btn" class="btn-primary">Crop & Continue</button>
+                </div>
+            </div>
+        </div>
 
         <!-- Editor Section (Hidden initially) -->
         <section id="editor-section" class="editor hidden">
@@ -437,6 +454,20 @@
 
     <!-- PDF Support -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Cropper.js with CDN fallback -->
+    <script>
+        (function () {
+            var s = document.createElement('script');
+            s.src = 'js/cropper.min.js';
+            s.onerror = function () {
+                var cdn = document.createElement('script');
+                cdn.src = 'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js';
+                cdn.crossOrigin = 'anonymous';
+                document.head.appendChild(cdn);
+            };
+            document.head.appendChild(s);
+        })();
+    </script>
     <script src="js/script.js"></script>
 </body>
 
