@@ -141,14 +141,23 @@
 
             <div class="controls">
                 <div class="control-group">
+                    <label>Document Type (Dimensions)</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="standard" checked
+                                data-width="413" data-height="531"> Standard (3.5x4.5cm)</label>
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="visa" data-width="600"
+                                data-height="600"> Visa (2x2 inch)</label>
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="pan" data-width="132"
+                                data-height="170"> PAN Card</label>
+                    </div>
+                </div>
+
+                <div class="control-group">
                     <label>Target File Size</label>
                     <div class="radio-group">
-                        <label class="radio-chip"><input type="radio" name="size" value="50" checked data-width="350"
-                                data-height="450"> 35x45 mm (50 KB)</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="100" data-width="600"
-                                data-height="600"> 2x2 inch (100 KB)</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="200" data-width="1200"
-                                data-height="1200"> 4x4 inch (200 KB)</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="50" checked> 50 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="100"> 100 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="200"> 200 KB</label>
                         <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
                     </div>
                     <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"

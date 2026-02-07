@@ -132,6 +132,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // 3. Handle Separate Dimension Presets (New Logic)
+    const dimRadios = document.getElementsByName('dim_preset');
+    dimRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            const widthInput = document.getElementById('width-input');
+            const heightInput = document.getElementById('height-input');
+            const customSizeInput = document.getElementById('custom-size-input');
+
+            // Handle Custom Dim
+            if (e.target.value === 'custom') {
+                // Maybe show custom logic if needed, but for dims we usually just edit inputs
+            }
+
+            const presetWidth = e.target.dataset.width;
+            const presetHeight = e.target.dataset.height;
+
+            if (presetWidth && presetHeight) {
+                widthInput.value = presetWidth;
+                heightInput.value = presetHeight;
+
+                // Visual feedback
+                widthInput.classList.remove('flash-update');
+                heightInput.classList.remove('flash-update');
+                void widthInput.offsetWidth;
+                widthInput.classList.add('flash-update');
+                heightInput.classList.add('flash-update');
+            }
+        });
+    });
+
     resetBtn.addEventListener('click', () => {
         resultSection.classList.add('hidden');
         editorSection.classList.add('hidden');

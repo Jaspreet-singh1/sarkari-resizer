@@ -141,12 +141,21 @@
 
             <div class="controls">
                 <div class="control-group">
+                    <label>Photo Type (Dimensions)</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="passport" checked
+                                data-width="350" data-height="450"> Passport (3.5x4.5cm)</label>
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="postcard"
+                                data-width="1200" data-height="1800"> Postcard (4x6 inch)</label>
+                    </div>
+                </div>
+
+                <div class="control-group">
                     <label>NTA Target Size</label>
                     <div class="radio-group">
-                        <label class="radio-chip"><input type="radio" name="size" value="30" data-width="350"
-                                data-height="450"> Passport (10-200 KB)</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="300" checked data-width="1200"
-                                data-height="1800"> Postcard (300 KB)</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="30"> 10-200 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="300" checked> 200-300
+                            KB</label>
                         <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
                     </div>
                     <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
