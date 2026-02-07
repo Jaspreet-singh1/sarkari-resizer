@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 await navigator.share(shareData);
             } else {
                 await navigator.clipboard.writeText(window.location.href);
-                alert('Link copied to clipboard! 📋');
+                showToast('Link copied to clipboard! 📋', 'success');
             }
         } catch (err) {
             console.log('Share failed:', err);
@@ -91,6 +91,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event Listeners
     selectBtn.addEventListener('click', () => fileInput.click());
+
+    // Drag & Drop
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => dropZone.classList.add('drag-active'), false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => dropZone.classList.remove('drag-active'), false);
+    });
+
+    dropZone.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files && files.length > 0) {
+            fileInput.files = files; // Update input for consistency
+            handleFileSelect({ target: { files: files } });
+        }
+    }
 
     fileInput.addEventListener('change', handleFileSelect);
 
@@ -197,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (headerHex === "89504E47") isValid = true;
 
         if (!isValid) {
-            alert('Invalid file format. Please upload a valid JPEG or PNG image.');
+            showToast('Invalid file. Please upload a specific JPEG or PNG image.', 'error');
             return;
         }
 
@@ -216,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function openCropModal(imageSrc) {
         // Check if Cropper.js library is loaded
         if (typeof Cropper === 'undefined') {
-            alert('ERROR: Cropper.js library failed to load!\n\nThis might be due to:\n- Ad blocker blocking CDN\n- Network connection issue\n- Browser extension blocking scripts\n\nPlease disable ad blockers and refresh the page.');
+            showToast('Cropper.js failed to load. Please disable ad blockers.', 'error');
             cropModal.classList.remove('hidden');
             const loadingText = document.getElementById('crop-loading');
             if (loadingText) loadingText.textContent = 'ERROR: Cropper.js library not loaded. Please disable ad blockers.';
@@ -270,20 +299,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     ready: function () {
                         // This fires when Cropper is fully ready
                         if (loadingText) loadingText.style.display = 'none';
-                        alert('SUCCESS! Crop tool is ready.\n\nYou should now see:\n✓ Semi-transparent crop box\n✓ Dotted grid lines\n✓ Resize handles on corners\n\nTry dragging the corners to resize the crop area!');
+                        showToast('Crop tool ready! Drag corners to adjust.', 'success');
                     }
                 });
 
             } catch (error) {
                 console.error('Failed to initialize Cropper:', error);
-                alert('ERROR initializing Cropper:\n' + error.message);
+                showToast('Error initializing crop tool.', 'error');
                 if (loadingText) loadingText.textContent = 'Failed to load crop tool: ' + error.message;
             }
         };
 
         cropImage.onerror = function () {
             console.error('Failed to load image');
-            alert('Failed to load image. Please try again.');
+            showToast('Failed to load image. Please try again.', 'error');
             if (loadingText) loadingText.textContent = 'Failed to load image';
         };
     }
@@ -302,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1000);
         } else {
             console.error('Cropper not initialized!');
-            alert('Cropper is not ready yet. Please wait for "SUCCESS" message.');
+            showToast('Cropper not ready yet.', 'error');
         }
     });
 
@@ -401,12 +430,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (blob) {
                     showResult(blob);
                 } else {
-                    alert("Could not compress to that size. The image is too complex.");
+                    showToast("Could not compress to that size. Image too complex.", 'error');
                 }
 
             } catch (err) {
                 console.error(err);
-                alert("An error occurred during processing.");
+                showToast("An error occurred during processing.", 'error');
             }
 
             compressBtn.textContent = "Resize & Compress";
@@ -647,14 +676,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Anti-Theft / Copy Protection
     document.addEventListener('contextmenu', event => event.preventDefault()); // Block Right Click
 
-    document.onkeydown = function (e) {
-        // Block F12 (DevTools)
-        if (e.code == 'F12') return false;
+    // Toast Notification System
+    function showToast(message, type = 'default') {
+        // Create container if not exists
+        let container = document.querySelector('.toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
 
-        // Block Ctrl+U (View Source)
-        if (e.ctrlKey && e.code == 'KeyU') return false;
+        // Create toast
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
 
-        // Block Ctrl+Shift+I (DevTools)
-        if (e.ctrlKey && e.shiftKey && e.code == 'KeyI') return false;
+        let icon = '';
+        if (type === 'success') icon = '✅';
+        if (type === 'error') icon = '⚠️';
+
+        toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+
+        container.appendChild(toast);
+
+        // Remove after 3s
+        setTimeout(() => {
+            toast.style.animation = 'fadeOutDown 0.3s ease-out forwards';
+            setTimeout(() => {
+                toast.remove();
+                if (container.children.length === 0) {
+                    container.remove();
+                }
+            }, 300);
+        }, 3500);
     }
 });
