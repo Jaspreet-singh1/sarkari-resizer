@@ -248,6 +248,7 @@ section h2 {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-weight: 700;
 }
 
 /* Smooth Scrolling */
@@ -255,7 +256,4 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Add Subtle Animations to Everything */
-* {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+/* REMOVED GLOBAL TRANSITION RULE AS IT BREAKS CROPPER.JS ON DESKTOP */

@@ -76,7 +76,10 @@
     <!-- Header -->
     <header class="app-header">
         <div class="logo-container">
-            <div class="logo"><span class="brand-name">Sarkari</span> <span class="badge">Resizer</span></div>
+            <a href="/" class="logo"
+                style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.5rem;">
+                <span class="brand-name">Sarkari</span> <span class="badge">Resizer</span>
+            </a>
             <div class="tagline">Sarkari Kaam, Ab Hoga Aasaan</div>
         </div>
         <nav style="display: flex; align-items: center; gap: 0.8rem;">
@@ -139,153 +142,152 @@
         <div id="crop-modal" class="modal hidden">
             <div class="modal-content">
                 <h3>Adjust Your Photo</h3>
-                <div class="img-container">
-                    <img id="crop-image" src="" alt="Crop Preview">
-                </div>
-                <div class="crop-controls">
-                    <button id="rotate-btn" class="btn-secondary">Rotate 90° ↻</button>
-                    <button id="crop-confirm-btn" class="btn-primary">Crop & Continue</button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Editor Section -->
-        <section id="editor-section" class="editor hidden">
-            <div class="preview-container">
-                <img id="image-preview" src="" alt="Uploaded Photo Preview">
-                <p id="original-size">Original: 0 KB</p>
-            </div>
-
-            <div class="controls">
-                <div class="control-group">
-                    <label>Document Type (Dimensions)</label>
-                    <div class="radio-group">
-                        <label class="radio-chip"><input type="radio" name="dim_preset" value="standard" checked
-                                data-width="413" data-height="531"> Standard (3.5x4.5cm)</label>
-                        <label class="radio-chip"><input type="radio" name="dim_preset" value="visa" data-width="600"
-                                data-height="600"> Visa (2x2 inch)</label>
-                        <label class="radio-chip"><input type="radio" name="dim_preset" value="pan" data-width="132"
-                                data-height="170"> PAN Card</label>
+                <!-- Editor Section -->
+                <section id="editor-section" class="editor hidden">
+                    <div class="preview-container">
+                        <img id="image-preview" src="" alt="Uploaded Photo Preview">
+                        <p id="original-size">Original: 0 KB</p>
                     </div>
-                </div>
 
-                <div class="control-group">
-                    <label>Target File Size</label>
-                    <div class="radio-group">
-                        <label class="radio-chip"><input type="radio" name="size" value="50" checked> 50 KB</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="100"> 100 KB</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="200"> 200 KB</label>
-                        <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>Document Type (Dimensions)</label>
+                            <div class="radio-group">
+                                <label class="radio-chip"><input type="radio" name="dim_preset" value="standard" checked
+                                        data-width="413" data-height="531"> Standard (3.5x4.5cm)</label>
+                                <label class="radio-chip"><input type="radio" name="dim_preset" value="visa"
+                                        data-width="600" data-height="600"> Visa (2x2 inch)</label>
+                                <label class="radio-chip"><input type="radio" name="dim_preset" value="pan"
+                                        data-width="132" data-height="170"> PAN Card</label>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label>Target File Size</label>
+                            <div class="radio-group">
+                                <label class="radio-chip"><input type="radio" name="size" value="50" checked> 50
+                                    KB</label>
+                                <label class="radio-chip"><input type="radio" name="size" value="100"> 100 KB</label>
+                                <label class="radio-chip"><input type="radio" name="size" value="200"> 200 KB</label>
+                                <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
+                            </div>
+                            <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
+                                min="10" max="2000">
+                        </div>
+
+                        <div class="control-group">
+                            <label>Dimensions</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="number" id="width-input" placeholder="Width" value="413"
+                                    class="form-input">
+                                <input type="number" id="height-input" placeholder="Height" value="531"
+                                    class="form-input">
+                            </div>
+                            <label class="checkbox-label"
+                                style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-main); cursor: pointer;">
+                                <input type="checkbox" id="auto-resize-check" checked
+                                    style="accent-color: var(--primary); width: 16px; height: 16px;">
+                                Auto-crop to Passport Ratio (3.5:4.5) ✨
+                            </label>
+                        </div>
+
+                        <div class="control-group">
+                            <label>Output Format</label>
+                            <div class="format-group">
+                                <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked>
+                                    JPEG</label>
+                                <label class="radio-chip"><input type="radio" name="format" value="image/png">
+                                    PNG</label>
+                                <label class="radio-chip"><input type="radio" name="format" value="application/pdf">
+                                    PDF</label>
+                            </div>
+                        </div>
+
+                        <button id="compress-btn" class="btn-action">Create Passport Photo</button>
                     </div>
-                    <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
-                        min="10" max="2000">
-                </div>
+                </section>
 
-                <div class="control-group">
-                    <label>Dimensions</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="number" id="width-input" placeholder="Width" value="413" class="form-input">
-                        <input type="number" id="height-input" placeholder="Height" value="531" class="form-input">
+                <!-- Result Section -->
+                <section id="result-section" class="result hidden">
+                    <div class="ad-slot ad-mid">
+                        <div class="ad-placeholder"></div>
                     </div>
-                    <label class="checkbox-label"
-                        style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-main); cursor: pointer;">
-                        <input type="checkbox" id="auto-resize-check" checked
-                            style="accent-color: var(--primary); width: 16px; height: 16px;">
-                        Auto-crop to Passport Ratio (3.5:4.5) ✨
-                    </label>
-                </div>
 
-                <div class="control-group">
-                    <label>Output Format</label>
-                    <div class="format-group">
-                        <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked>
-                            JPEG</label>
-                        <label class="radio-chip"><input type="radio" name="format" value="image/png"> PNG</label>
-                        <label class="radio-chip"><input type="radio" name="format" value="application/pdf"> PDF</label>
+                    <div class="success-box">
+                        <h3>Photo Ready! 🎉</h3>
+                        <p class="success-note">Standard Passport Size (413x531 px).</p>
+                        <img id="result-image" class="result-preview" src="" alt="Compressed Result" loading="lazy">
+                        <p id="final-size-display">New Size: -- KB</p>
+                        <div class="download-actions">
+                            <a id="download-link" class="btn-download" download="passport-photo.jpg">Download Image</a>
+                            <button id="reset-btn" class="btn-text">Make Another</button>
+                        </div>
+                        <div class="share-prompt">
+                            <p>❤️ <b>Support us:</b> Help a friend by sharing!</p>
+                            <button class="btn-whatsapp"
+                                onclick="window.open('https://api.whatsapp.com/send?text=Resize%20photos%20for%20Govt%20Forms%2C%20Jobs%20%26%20Admissions%20in%201%20click!%20Fast%20%26%20Safe%3A%20https%3A%2F%2Fsarkariresizer.app', '_blank')">Share
+                                on WhatsApp</button>
+                        </div>
                     </div>
-                </div>
+                </section>
 
-                <button id="compress-btn" class="btn-action">Create Passport Photo</button>
-            </div>
-        </section>
+                <!-- SEO Content -->
+                <section class="seo-content" id="help">
+                    <h2>Passport Photo Size Guide</h2>
+                    <p>Different countries have different requirements, but the "Standard International Size" works for
+                        most
+                        Visas and Indian ID cards.</p>
 
-        <!-- Result Section -->
-        <section id="result-section" class="result hidden">
-            <div class="ad-slot ad-mid">
-                <div class="ad-placeholder"></div>
-            </div>
+                    <div class="exam-grid">
+                        <div class="exam-card">
+                            <span class="exam-name">Standard Size</span>
+                            <div class="exam-detail"><strong>CM:</strong> 3.5 cm x 4.5 cm</div>
+                            <div class="exam-detail"><strong>Inches:</strong> 1.38" x 1.77"</div>
+                            <div class="exam-detail"><strong>Pixels:</strong> 413px x 531px (approx @ 300 DPI)</div>
+                        </div>
+                    </div>
 
-            <div class="success-box">
-                <h3>Photo Ready! 🎉</h3>
-                <p class="success-note">Standard Passport Size (413x531 px).</p>
-                <img id="result-image" class="result-preview" src="" alt="Compressed Result" loading="lazy">
-                <p id="final-size-display">New Size: -- KB</p>
-                <div class="download-actions">
-                    <a id="download-link" class="btn-download" download="passport-photo.jpg">Download Image</a>
-                    <button id="reset-btn" class="btn-text">Make Another</button>
-                </div>
-                <div class="share-prompt">
-                    <p>❤️ <b>Support us:</b> Help a friend by sharing!</p>
-                    <button class="btn-whatsapp"
-                        onclick="window.open('https://api.whatsapp.com/send?text=Resize%20photos%20for%20Govt%20Forms%2C%20Jobs%20%26%20Admissions%20in%201%20click!%20Fast%20%26%20Safe%3A%20https%3A%2F%2Fsarkariresizer.app', '_blank')">Share
-                        on WhatsApp</button>
-                </div>
-            </div>
-        </section>
+                    <div class="pro-tips">
+                        <h3>Taking a Good Passport Photo at Home</h3>
+                        <div class="tip-card"><b>Lighting:</b> Face a window. Natural light is best. Avoid shadows on
+                            your face.
+                        </div>
+                        <div class="tip-card"><b>Background:</b> Use a plain white wall or sheet. No patterns.</div>
+                        <div class="tip-card"><b>Expression:</b> Neutral expression. Mouth closed. Eyes open.</div>
+                    </div>
+                </section>
 
-        <!-- SEO Content -->
-        <section class="seo-content" id="help">
-            <h2>Passport Photo Size Guide</h2>
-            <p>Different countries have different requirements, but the "Standard International Size" works for most
-                Visas and Indian ID cards.</p>
-
-            <div class="exam-grid">
-                <div class="exam-card">
-                    <span class="exam-name">Standard Size</span>
-                    <div class="exam-detail"><strong>CM:</strong> 3.5 cm x 4.5 cm</div>
-                    <div class="exam-detail"><strong>Inches:</strong> 1.38" x 1.77"</div>
-                    <div class="exam-detail"><strong>Pixels:</strong> 413px x 531px (approx @ 300 DPI)</div>
-                </div>
-            </div>
-
-            <div class="pro-tips">
-                <h3>Taking a Good Passport Photo at Home</h3>
-                <div class="tip-card"><b>Lighting:</b> Face a window. Natural light is best. Avoid shadows on your face.
-                </div>
-                <div class="tip-card"><b>Background:</b> Use a plain white wall or sheet. No patterns.</div>
-                <div class="tip-card"><b>Expression:</b> Neutral expression. Mouth closed. Eyes open.</div>
-            </div>
-        </section>
-
-        <!-- Persistent Support Section -->
-        <section class="support-section">
-            <div class="support-content">
-                <h3>❤️ Support this Project</h3>
-                <p>We keep this tool <b>100% Free & Private</b> for everyone. The only way we grow is if you share it.
-                </p>
-                <div class="share-buttons">
-                    <button class="btn-whatsapp"
-                        onclick="window.open('https://api.whatsapp.com/send?text=Resize%20photos%20for%20Govt%20Forms%2C%20Jobs%20%26%20Admissions%20in%201%20click!%20Fast%20%26%20Safe%3A%20https%3A%2F%2Fsarkariresizer.app', '_blank')">
-                        <span class="icon">💬</span> Share on WhatsApp
-                    </button>
-                    <button id="share-more-btn" class="btn-secondary-outline">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="18" cy="5" r="3"></circle>
-                            <circle cx="6" cy="12" r="3"></circle>
-                            <circle cx="18" cy="19" r="3"></circle>
-                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                        </svg>
-                        More Options
-                    </button>
-                </div>
-                <p style="margin-top: 1.2rem; font-size: 0.9rem; color: var(--text-muted);">
-                    Want to donate? <a href="https://buymeacoffee.com/sarkari.resizer" target="_blank"
-                        class="donate-link">☕ Buy me a Coffee</a>
-                </p>
-            </div>
-        </section>
+                <!-- Persistent Support Section -->
+                <section class="support-section">
+                    <div class="support-content">
+                        <h3>❤️ Support this Project</h3>
+                        <p>We keep this tool <b>100% Free & Private</b> for everyone. The only way we grow is if you
+                            share it.
+                        </p>
+                        <div class="share-buttons">
+                            <button class="btn-whatsapp"
+                                onclick="window.open('https://api.whatsapp.com/send?text=Resize%20photos%20for%20Govt%20Forms%2C%20Jobs%20%26%20Admissions%20in%201%20click!%20Fast%20%26%20Safe%3A%20https%3A%2F%2Fsarkariresizer.app', '_blank')">
+                                <span class="icon">💬</span> Share on WhatsApp
+                            </button>
+                            <button id="share-more-btn" class="btn-secondary-outline">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="18" cy="5" r="3"></circle>
+                                    <circle cx="6" cy="12" r="3"></circle>
+                                    <circle cx="18" cy="19" r="3"></circle>
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                </svg>
+                                More Options
+                            </button>
+                        </div>
+                        <p style="margin-top: 1.2rem; font-size: 0.9rem; color: var(--text-muted);">
+                            Want to donate? <a href="https://buymeacoffee.com/sarkari.resizer" target="_blank"
+                                class="donate-link">☕ Buy me a Coffee</a>
+                        </p>
+                    </div>
+                </section>
 
     </main>
 
@@ -307,6 +309,21 @@
         </div>
         <!-- Ad Unit 3 (Sticky) Placeholder -->
     </footer>
+
+    <!-- Crop Modal (Moved to Body for Better Desktop Compat) -->
+    <div id="crop-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Adjust Your Photo</h3>
+            <p id="crop-loading" style="text-align: center; color: #888; margin-bottom: 1rem;">Loading crop tool...</p>
+            <div class="img-container">
+                <img id="crop-image" src="" alt="Crop Preview">
+            </div>
+            <div class="crop-controls">
+                <button id="rotate-btn" class="btn-secondary">Rotate 90° ↻</button>
+                <button id="crop-confirm-btn" class="btn-primary">Crop & Continue</button>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="js/cropper.min.js"></script>

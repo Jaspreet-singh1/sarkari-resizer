@@ -152,7 +152,10 @@
     <!-- Header -->
     <header class="app-header">
         <div class="logo-container">
-            <div class="logo"><span class="brand-name">Sarkari</span> <span class="badge">Resizer</span></div>
+            <a href="/" class="logo"
+                style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.5rem;">
+                <span class="brand-name">Sarkari</span> <span class="badge">Resizer</span>
+            </a>
             <div class="tagline">Sarkari Kaam, Ab Hoga Aasaan</div>
         </div>
         <nav style="display: flex; align-items: center; gap: 0.8rem;">
@@ -214,21 +217,6 @@
             </div>
         </section>
 
-        <!-- Crop Modal -->
-        <div id="crop-modal" class="modal hidden">
-            <div class="modal-content">
-                <h3>Adjust Your Photo</h3>
-                <p id="crop-loading" style="text-align: center; color: #888; margin-bottom: 1rem;">Loading crop tool...
-                </p>
-                <div class="img-container">
-                    <img id="crop-image" src="" alt="Crop Preview">
-                </div>
-                <div class="crop-controls">
-                    <button id="rotate-btn" class="btn-secondary">Rotate 90° ↻</button>
-                    <button id="crop-confirm-btn" class="btn-primary">Crop & Continue</button>
-                </div>
-            </div>
-        </div>
 
         <!-- Editor Section (Hidden initially) -->
         <section id="editor-section" class="editor hidden">
@@ -455,6 +443,22 @@
 
     <!-- PDF Support -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Crop Modal (Moved to Body for Better Desktop Compat) -->
+    <div id="crop-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Adjust Your Photo</h3>
+            <p id="crop-loading" style="text-align: center; color: #888; margin-bottom: 1rem;">Loading crop tool...</p>
+            <div class="img-container">
+                <img id="crop-image" src="" alt="Crop Preview">
+            </div>
+            <div class="crop-controls">
+                <button id="rotate-btn" class="btn-secondary">Rotate 90° ↻</button>
+                <button id="crop-confirm-btn" class="btn-primary">Crop & Continue</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Cropper.js with CDN fallback -->
     <script>
         (function () {
