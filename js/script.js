@@ -116,7 +116,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (presetWidth && presetHeight) {
                 widthInput.value = presetWidth;
                 heightInput.value = presetHeight;
-                // Optional: Flash fields to show update?
+
+                // Visual feedback (The Best Polish ✨)
+                widthInput.classList.remove('flash-update');
+                heightInput.classList.remove('flash-update');
+                void widthInput.offsetWidth; // Trigger reflow
+                widthInput.classList.add('flash-update');
+                heightInput.classList.add('flash-update');
+
             } else if (e.target.value !== 'custom') {
                 // If switching to a non-custom preset that HAS NO dimensions (rare), maybe clear?
                 // But for now, let's keep previous values or clearer if we want specific behavior.

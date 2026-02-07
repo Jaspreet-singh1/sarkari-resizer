@@ -758,3 +758,25 @@ section {
         font-size: 1.3rem;
     }
 }
+
+/* Animations */
+@keyframes highlight-input {
+    0% {
+        border-color: var(--border-color);
+        background: transparent;
+    }
+
+    50% {
+        border-color: var(--success);
+        background: rgba(30, 142, 62, 0.1);
+    }
+
+    100% {
+        border-color: var(--border-color);
+        background: transparent;
+    }
+}
+
+.flash-update {
+    animation: highlight-input 0.6s ease-out;
+}
