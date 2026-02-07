@@ -141,120 +141,117 @@
             </div>
         </section>
 
-        <!-- Crop Modal -->
-        <div id="crop-modal" class="modal hidden">
-            <div class="modal-content">
-                <h3>Adjust Your Photo</h3>
 
-                <!-- Editor Section -->
-                <section id="editor-section" class="editor hidden">
-                    <div class="preview-container">
-                        <img id="image-preview" src="" alt="Uploaded Photo Preview">
-                        <p id="original-size">Original: 0 KB</p>
+
+        <!-- Editor Section -->
+        <section id="editor-section" class="editor hidden">
+            <div class="preview-container">
+                <img id="image-preview" src="" alt="Uploaded Photo Preview">
+                <p id="original-size">Original: 0 KB</p>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>Document Type (Dimensions)</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="photo" checked
+                                data-width="350" data-height="350"> Photo (350x350px)</label>
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="sign" data-width="1000"
+                                data-height="1000"> Signature (Max)</label>
                     </div>
+                </div>
 
-                    <div class="controls">
-                        <div class="control-group">
-                            <label>Document Type (Dimensions)</label>
-                            <div class="radio-group">
-                                <label class="radio-chip"><input type="radio" name="dim_preset" value="photo" checked
-                                        data-width="350" data-height="350"> Photo (350x350px)</label>
-                                <label class="radio-chip"><input type="radio" name="dim_preset" value="sign"
-                                        data-width="1000" data-height="1000"> Signature (Max)</label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label>UPSC Target Size</label>
-                            <div class="radio-group">
-                                <label class="radio-chip"><input type="radio" name="size" value="50" checked> 50
-                                    KB</label>
-                                <label class="radio-chip"><input type="radio" name="size" value="100"> 100 KB</label>
-                                <label class="radio-chip"><input type="radio" name="size" value="300"> 300 KB</label>
-                                <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
-                            </div>
-                            <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
-                                min="10" max="1000">
-                        </div>
-
-                        <div class="control-group">
-                            <label>Dimensions</label>
-                            <div style="display: flex; gap: 10px;">
-                                <input type="number" id="width-input" placeholder="Width (px)" class="form-input">
-                                <input type="number" id="height-input" placeholder="Height (px)" class="form-input">
-                            </div>
-                            <label class="checkbox-label"
-                                style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-main); cursor: pointer;">
-                                <input type="checkbox" id="auto-resize-check" checked
-                                    style="accent-color: var(--primary); width: 16px; height: 16px;">
-                                Auto-adjust dimensions for UPSC ✨
-                            </label>
-                        </div>
-
-                        <div class="control-group">
-                            <label>Output Format</label>
-                            <div class="format-group">
-                                <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked>
-                                    JPEG
-                                    (Recommended)</label>
-                                <label class="radio-chip"><input type="radio" name="format" value="image/png">
-                                    PNG</label>
-                                <label class="radio-chip"><input type="radio" name="format" value="application/pdf">
-                                    PDF</label>
-                            </div>
-                        </div>
-
-                        <button id="compress-btn" class="btn-action">Resize for UPSC</button>
+                <div class="control-group">
+                    <label>UPSC Target Size</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="size" value="50" checked> 50
+                            KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="100"> 100 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="300"> 300 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
                     </div>
-                </section>
+                    <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
+                        min="10" max="1000">
+                </div>
 
-                <!-- Result Section -->
-                <section id="result-section" class="result hidden">
-                    <div class="ad-slot ad-mid">
-                        <div class="ad-placeholder"></div>
+                <div class="control-group">
+                    <label>Dimensions</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="width-input" placeholder="Width (px)" class="form-input">
+                        <input type="number" id="height-input" placeholder="Height (px)" class="form-input">
                     </div>
+                    <label class="checkbox-label"
+                        style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-main); cursor: pointer;">
+                        <input type="checkbox" id="auto-resize-check" checked
+                            style="accent-color: var(--primary); width: 16px; height: 16px;">
+                        Auto-adjust dimensions for UPSC ✨
+                    </label>
+                </div>
 
-                    <div class="success-box">
-                        <h3>UPSC Ready! 🎉</h3>
-                        <p class="success-note">File meets Union Public Service Commission standards.</p>
-                        <img id="result-image" class="result-preview" src="" alt="Compressed Result" loading="lazy">
-                        <p id="final-size-display">New Size: -- KB</p>
-                        <div class="download-actions">
-                            <a id="download-link" class="btn-download" download="upsc-photo.jpg">Download Image</a>
-                            <button id="reset-btn" class="btn-text">Resize Another</button>
-                            <a href="/" class="btn-text">Go Home</a>
-                        </div>
+                <div class="control-group">
+                    <label>Output Format</label>
+                    <div class="format-group">
+                        <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked>
+                            JPEG
+                            (Recommended)</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="image/png">
+                            PNG</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="application/pdf">
+                            PDF</label>
                     </div>
-                </section>
+                </div>
 
-                <!-- SEO Content -->
-                <section class="seo-content" id="help">
-                    <h2>UPSC Photo & Signature Guidelines</h2>
-                    <p>UPSC allows a larger file size range compared to SSC, but content quality is key.</p>
+                <button id="compress-btn" class="btn-action">Resize for UPSC</button>
+            </div>
+        </section>
 
-                    <div class="exam-grid">
-                        <div class="exam-card">
-                            <span class="exam-name">UPSC CSE Photo</span>
-                            <div class="exam-detail"><strong>Size:</strong> 20 KB to 300 KB</div>
-                            <div class="exam-detail"><strong>Format:</strong> JPEG</div>
-                            <div class="exam-detail"><strong>Dimensions:</strong> 350px x 350px (min)</div>
-                        </div>
-                        <div class="exam-card">
-                            <span class="exam-name">UPSC Signature</span>
-                            <div class="exam-detail"><strong>Size:</strong> 20 KB to 300 KB</div>
-                            <div class="exam-detail"><strong>Format:</strong> JPEG</div>
-                            <div class="exam-detail"><strong>Dimensions:</strong> 1000px x 1000px (max)</div>
-                        </div>
-                    </div>
+        <!-- Result Section -->
+        <section id="result-section" class="result hidden">
+            <div class="ad-slot ad-mid">
+                <div class="ad-placeholder"></div>
+            </div>
 
-                    <div class="pro-tips">
-                        <h3>Important for UPSC Candidates</h3>
-                        <div class="tip-card"><b>Name and Date:</b> Recent notifications often require the Date of Photo
-                            taken
-                            to be printed on the photo. Check your specific notification.</div>
-                        <div class="tip-card"><b>Clarity:</b> The face must occupy 75% of the image.</div>
-                    </div>
-                </section>
+            <div class="success-box">
+                <h3>UPSC Ready! 🎉</h3>
+                <p class="success-note">File meets Union Public Service Commission standards.</p>
+                <img id="result-image" class="result-preview" src="" alt="Compressed Result" loading="lazy">
+                <p id="final-size-display">New Size: -- KB</p>
+                <div class="download-actions">
+                    <a id="download-link" class="btn-download" download="upsc-photo.jpg">Download Image</a>
+                    <button id="reset-btn" class="btn-text">Resize Another</button>
+                    <a href="/" class="btn-text">Go Home</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Content -->
+        <section class="seo-content" id="help">
+            <h2>UPSC Photo & Signature Guidelines</h2>
+            <p>UPSC allows a larger file size range compared to SSC, but content quality is key.</p>
+
+            <div class="exam-grid">
+                <div class="exam-card">
+                    <span class="exam-name">UPSC CSE Photo</span>
+                    <div class="exam-detail"><strong>Size:</strong> 20 KB to 300 KB</div>
+                    <div class="exam-detail"><strong>Format:</strong> JPEG</div>
+                    <div class="exam-detail"><strong>Dimensions:</strong> 350px x 350px (min)</div>
+                </div>
+                <div class="exam-card">
+                    <span class="exam-name">UPSC Signature</span>
+                    <div class="exam-detail"><strong>Size:</strong> 20 KB to 300 KB</div>
+                    <div class="exam-detail"><strong>Format:</strong> JPEG</div>
+                    <div class="exam-detail"><strong>Dimensions:</strong> 1000px x 1000px (max)</div>
+                </div>
+            </div>
+
+            <div class="pro-tips">
+                <h3>Important for UPSC Candidates</h3>
+                <div class="tip-card"><b>Name and Date:</b> Recent notifications often require the Date of Photo
+                    taken
+                    to be printed on the photo. Check your specific notification.</div>
+                <div class="tip-card"><b>Clarity:</b> The face must occupy 75% of the image.</div>
+            </div>
+        </section>
 
     </main>
 

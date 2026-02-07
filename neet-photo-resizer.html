@@ -138,144 +138,141 @@
             </div>
         </section>
 
-        <!-- Crop Modal -->
-        <div id="crop-modal" class="modal hidden">
-            <div class="modal-content">
-                <h3>Adjust Your Photo</h3>
 
-                <!-- Editor Section -->
-                <section id="editor-section" class="editor hidden">
-                    <div class="preview-container">
-                        <img id="image-preview" src="" alt="Uploaded Photo Preview">
-                        <p id="original-size">Original: 0 KB</p>
+
+        <!-- Editor Section -->
+        <section id="editor-section" class="editor hidden">
+            <div class="preview-container">
+                <img id="image-preview" src="" alt="Uploaded Photo Preview">
+                <p id="original-size">Original: 0 KB</p>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>Photo Type (Dimensions)</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="passport" checked
+                                data-width="350" data-height="450"> Passport (3.5x4.5cm)</label>
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="postcard"
+                                data-width="1200" data-height="1800"> Postcard (4x6 inch)</label>
                     </div>
+                </div>
 
-                    <div class="controls">
-                        <div class="control-group">
-                            <label>Photo Type (Dimensions)</label>
-                            <div class="radio-group">
-                                <label class="radio-chip"><input type="radio" name="dim_preset" value="passport" checked
-                                        data-width="350" data-height="450"> Passport (3.5x4.5cm)</label>
-                                <label class="radio-chip"><input type="radio" name="dim_preset" value="postcard"
-                                        data-width="1200" data-height="1800"> Postcard (4x6 inch)</label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label>NTA Target Size</label>
-                            <div class="radio-group">
-                                <label class="radio-chip"><input type="radio" name="size" value="30"> 10-200 KB</label>
-                                <label class="radio-chip"><input type="radio" name="size" value="300" checked> 200-300
-                                    KB</label>
-                                <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
-                            </div>
-                            <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
-                                min="10" max="1000">
-                        </div>
-
-                        <div class="control-group">
-                            <label>Dimensions</label>
-                            <div style="display: flex; gap: 10px;">
-                                <input type="number" id="width-input" placeholder="Width (px)" class="form-input">
-                                <input type="number" id="height-input" placeholder="Height (px)" class="form-input">
-                            </div>
-                            <label class="checkbox-label"
-                                style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-main); cursor: pointer;">
-                                <input type="checkbox" id="auto-resize-check" checked
-                                    style="accent-color: var(--primary); width: 16px; height: 16px;">
-                                Auto-adjust dimensions for NTA ✨
-                            </label>
-                        </div>
-
-                        <div class="control-group">
-                            <label>Output Format</label>
-                            <div class="format-group">
-                                <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked>
-                                    JPEG</label>
-                                <label class="radio-chip"><input type="radio" name="format" value="image/png">
-                                    PNG</label>
-                                <label class="radio-chip"><input type="radio" name="format" value="application/pdf">
-                                    PDF</label>
-                            </div>
-                        </div>
-
-                        <button id="compress-btn" class="btn-action">Resize for NEET/JEE</button>
+                <div class="control-group">
+                    <label>NTA Target Size</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="size" value="30"> 10-200 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="300" checked> 200-300
+                            KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
                     </div>
-                </section>
+                    <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
+                        min="10" max="1000">
+                </div>
 
-                <!-- Result Section -->
-                <section id="result-section" class="result hidden">
-                    <div class="ad-slot ad-mid">
-                        <div class="ad-placeholder"></div>
+                <div class="control-group">
+                    <label>Dimensions</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="width-input" placeholder="Width (px)" class="form-input">
+                        <input type="number" id="height-input" placeholder="Height (px)" class="form-input">
                     </div>
+                    <label class="checkbox-label"
+                        style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-main); cursor: pointer;">
+                        <input type="checkbox" id="auto-resize-check" checked
+                            style="accent-color: var(--primary); width: 16px; height: 16px;">
+                        Auto-adjust dimensions for NTA ✨
+                    </label>
+                </div>
 
-                    <div class="success-box">
-                        <h3>Admit Card Ready! 🎓</h3>
-                        <p class="success-note">NTA Compliant Format.</p>
-                        <img id="result-image" class="result-preview" src="" alt="Compressed Result" loading="lazy">
-                        <p id="final-size-display">New Size: -- KB</p>
-                        <div class="download-actions">
-                            <a id="download-link" class="btn-download" download="neet-photo.jpg">Download Image</a>
-                            <button id="reset-btn" class="btn-text">Resize Another</button>
-                        </div>
-                        <div class="share-prompt">
-                            <p>❤️ <b>Support us:</b> Help a friend by sharing!</p>
-                            <button class="btn-whatsapp"
-                                onclick="window.open('https://api.whatsapp.com/send?text=Resize%20photos%20for%20Govt%20Forms%2C%20Jobs%20%26%20Admissions%20in%201%20click!%20Fast%20%26%20Safe%3A%20https%3A%2F%2Fsarkariresizer.app', '_blank')">Share
-                                on WhatsApp</button>
-                        </div>
+                <div class="control-group">
+                    <label>Output Format</label>
+                    <div class="format-group">
+                        <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked>
+                            JPEG</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="image/png">
+                            PNG</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="application/pdf">
+                            PDF</label>
                     </div>
-                </section>
+                </div>
 
-                <!-- SEO Content -->
-                <section class="seo-content" id="help">
-                    <h2>NTA NEET & JEE Guidelines</h2>
-                    <p>NTA requires two types of photos for NEET: Passport size and Postcard size.</p>
+                <button id="compress-btn" class="btn-action">Resize for NEET/JEE</button>
+            </div>
+        </section>
 
-                    <div class="exam-grid">
-                        <div class="exam-card">
-                            <span class="exam-name">Passport Size</span>
-                            <div class="exam-detail"><strong>Size:</strong> 10-200 KB</div>
-                            <div class="exam-detail"><strong>Type:</strong> White Background</div>
-                        </div>
-                        <div class="exam-card">
-                            <span class="exam-name">Postcard Size</span>
-                            <div class="exam-detail"><strong>Size:</strong> 10-200 KB</div>
-                            <div class="exam-detail"><strong>Dim:</strong> 4 inch x 6 inch</div>
-                        </div>
-                    </div>
-                </section>
+        <!-- Result Section -->
+        <section id="result-section" class="result hidden">
+            <div class="ad-slot ad-mid">
+                <div class="ad-placeholder"></div>
+            </div>
 
-                <!-- Persistent Support Section -->
-                <section class="support-section">
-                    <div class="support-content">
-                        <h3>❤️ Support this Project</h3>
-                        <p>We keep this tool <b>100% Free & Private</b> for everyone. The only way we grow is if you
-                            share it.
-                        </p>
-                        <div class="share-buttons">
-                            <button class="btn-whatsapp"
-                                onclick="window.open('https://api.whatsapp.com/send?text=Resize%20photos%20for%20Govt%20Forms%2C%20Jobs%20%26%20Admissions%20in%201%20click!%20Fast%20%26%20Safe%3A%20https%3A%2F%2Fsarkariresizer.app', '_blank')">
-                                <span class="icon">💬</span> Share on WhatsApp
-                            </button>
-                            <button id="share-more-btn" class="btn-secondary-outline">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="18" cy="5" r="3"></circle>
-                                    <circle cx="6" cy="12" r="3"></circle>
-                                    <circle cx="18" cy="19" r="3"></circle>
-                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                                </svg>
-                                More Options
-                            </button>
-                        </div>
-                        <p style="margin-top: 1.2rem; font-size: 0.9rem; color: var(--text-muted);">
-                            Want to donate? <a href="https://buymeacoffee.com/sarkari.resizer" target="_blank"
-                                class="donate-link">☕ Buy me a Coffee</a>
-                        </p>
-                    </div>
-                </section>
+            <div class="success-box">
+                <h3>Admit Card Ready! 🎓</h3>
+                <p class="success-note">NTA Compliant Format.</p>
+                <img id="result-image" class="result-preview" src="" alt="Compressed Result" loading="lazy">
+                <p id="final-size-display">New Size: -- KB</p>
+                <div class="download-actions">
+                    <a id="download-link" class="btn-download" download="neet-photo.jpg">Download Image</a>
+                    <button id="reset-btn" class="btn-text">Resize Another</button>
+                </div>
+                <div class="share-prompt">
+                    <p>❤️ <b>Support us:</b> Help a friend by sharing!</p>
+                    <button class="btn-whatsapp"
+                        onclick="window.open('https://api.whatsapp.com/send?text=Resize%20photos%20for%20Govt%20Forms%2C%20Jobs%20%26%20Admissions%20in%201%20click!%20Fast%20%26%20Safe%3A%20https%3A%2F%2Fsarkariresizer.app', '_blank')">Share
+                        on WhatsApp</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Content -->
+        <section class="seo-content" id="help">
+            <h2>NTA NEET & JEE Guidelines</h2>
+            <p>NTA requires two types of photos for NEET: Passport size and Postcard size.</p>
+
+            <div class="exam-grid">
+                <div class="exam-card">
+                    <span class="exam-name">Passport Size</span>
+                    <div class="exam-detail"><strong>Size:</strong> 10-200 KB</div>
+                    <div class="exam-detail"><strong>Type:</strong> White Background</div>
+                </div>
+                <div class="exam-card">
+                    <span class="exam-name">Postcard Size</span>
+                    <div class="exam-detail"><strong>Size:</strong> 10-200 KB</div>
+                    <div class="exam-detail"><strong>Dim:</strong> 4 inch x 6 inch</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Persistent Support Section -->
+        <section class="support-section">
+            <div class="support-content">
+                <h3>❤️ Support this Project</h3>
+                <p>We keep this tool <b>100% Free & Private</b> for everyone. The only way we grow is if you
+                    share it.
+                </p>
+                <div class="share-buttons">
+                    <button class="btn-whatsapp"
+                        onclick="window.open('https://api.whatsapp.com/send?text=Resize%20photos%20for%20Govt%20Forms%2C%20Jobs%20%26%20Admissions%20in%201%20click!%20Fast%20%26%20Safe%3A%20https%3A%2F%2Fsarkariresizer.app', '_blank')">
+                        <span class="icon">💬</span> Share on WhatsApp
+                    </button>
+                    <button id="share-more-btn" class="btn-secondary-outline">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                        More Options
+                    </button>
+                </div>
+                <p style="margin-top: 1.2rem; font-size: 0.9rem; color: var(--text-muted);">
+                    Want to donate? <a href="https://buymeacoffee.com/sarkari.resizer" target="_blank"
+                        class="donate-link">☕ Buy me a Coffee</a>
+                </p>
+            </div>
+        </section>
 
     </main>
 

@@ -141,129 +141,123 @@
             </div>
         </section>
 
-        <!-- Crop Modal -->
-        <div id="crop-modal" class="modal hidden">
-            <div class="modal-content">
-                <h3>Adjust Your Photo</h3>
-                <p id="crop-loading" style="text-align: center; color: #888; margin-bottom: 1rem;">Loading crop tool...
-                </p>
 
-                <!-- Editor Section -->
-                <section id="editor-section" class="editor hidden">
-                    <div class="preview-container">
-                        <img id="image-preview" src="" alt="Uploaded Photo Preview">
-                        <p id="original-size">Original: 0 KB</p>
+        <!-- Editor Section -->
+        <section id="editor-section" class="editor hidden">
+            <div class="preview-container">
+                <img id="image-preview" src="" alt="Uploaded Photo Preview">
+                <p id="original-size">Original: 0 KB</p>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>Document Type (Dimensions)</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="photo" checked
+                                data-width="350" data-height="450"> Photo (3.5x4.5cm)</label>
+                        <label class="radio-chip"><input type="radio" name="dim_preset" value="sign" data-width="400"
+                                data-height="200"> Signature (4x2cm)</label>
                     </div>
+                </div>
 
-                    <div class="controls">
-                        <div class="control-group">
-                            <label>Document Type (Dimensions)</label>
-                            <div class="radio-group">
-                                <label class="radio-chip"><input type="radio" name="dim_preset" value="photo" checked
-                                        data-width="350" data-height="450"> Photo (3.5x4.5cm)</label>
-                                <label class="radio-chip"><input type="radio" name="dim_preset" value="sign"
-                                        data-width="400" data-height="200"> Signature (4x2cm)</label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label>SSC Target Size</label>
-                            <div class="radio-group">
-                                <label class="radio-chip"><input type="radio" name="size" value="20"> 20 KB</label>
-                                <label class="radio-chip"><input type="radio" name="size" value="50" checked> 50
-                                    KB</label>
-                                <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
-                            </div>
-                            <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
-                                min="10" max="1000">
-                        </div>
-
-                        <div class="control-group">
-                            <label>Dimensions</label>
-                            <div style="display: flex; gap: 10px;">
-                                <input type="number" id="width-input" placeholder="Width (px)" class="form-input">
-                                <input type="number" id="height-input" placeholder="Height (px)" class="form-input">
-                            </div>
-                            <label class="checkbox-label"
-                                style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-main); cursor: pointer;">
-                                <input type="checkbox" id="auto-resize-check" checked
-                                    style="accent-color: var(--primary); width: 16px; height: 16px;">
-                                Auto-adjust dimensions for SSC Standards ✨
-                            </label>
-                        </div>
-
-                        <div class="control-group">
-                            <label>Output Format</label>
-                            <div class="format-group">
-                                <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked>
-                                    JPEG
-                                    (Recommended)</label>
-                                <label class="radio-chip"><input type="radio" name="format" value="image/png">
-                                    PNG</label>
-                                <label class="radio-chip"><input type="radio" name="format" value="application/pdf">
-                                    PDF</label>
-                            </div>
-                        </div>
-
-                        <button id="compress-btn" class="btn-action">Resize for SSC</button>
+                <div class="control-group">
+                    <label>SSC Target Size</label>
+                    <div class="radio-group">
+                        <label class="radio-chip"><input type="radio" name="size" value="20"> 20 KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="50" checked> 50
+                            KB</label>
+                        <label class="radio-chip"><input type="radio" name="size" value="custom"> Custom</label>
                     </div>
-                </section>
+                    <input type="number" id="custom-size-input" placeholder="Enter KB" class="form-input hidden"
+                        min="10" max="1000">
+                </div>
 
-                <!-- Result Section -->
-                <section id="result-section" class="result hidden">
-                    <div class="ad-slot ad-mid">
-                        <div class="ad-placeholder"></div>
+                <div class="control-group">
+                    <label>Dimensions</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="width-input" placeholder="Width (px)" class="form-input">
+                        <input type="number" id="height-input" placeholder="Height (px)" class="form-input">
                     </div>
+                    <label class="checkbox-label"
+                        style="margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-main); cursor: pointer;">
+                        <input type="checkbox" id="auto-resize-check" checked
+                            style="accent-color: var(--primary); width: 16px; height: 16px;">
+                        Auto-adjust dimensions for SSC Standards ✨
+                    </label>
+                </div>
 
-                    <div class="success-box">
-                        <h3>SSC Ready! 🎉</h3>
-                        <p class="success-note">Perfect for your application.</p>
-                        <img id="result-image" class="result-preview" src="" alt="Compressed Result" loading="lazy">
-                        <p id="final-size-display">New Size: -- KB</p>
-                        <div class="download-actions">
-                            <a id="download-link" class="btn-download" download="ssc-photo.jpg">Download Image</a>
-                            <button id="reset-btn" class="btn-text">Resize Another</button>
-                        </div>
-                        <div class="share-prompt">
-                            <p>❤️ <b>Support us:</b> Help a friend by sharing!</p>
-                            <button class="btn-whatsapp"
-                                onclick="window.open('https://api.whatsapp.com/send?text=Resize%20photos%20for%20Govt%20Forms%2C%20Jobs%20%26%20Admissions%20in%201%20click!%20Fast%20%26%20Safe%3A%20https%3A%2F%2Fsarkariresizer.app', '_blank')">Share
-                                on WhatsApp</button>
-                        </div>
+                <div class="control-group">
+                    <label>Output Format</label>
+                    <div class="format-group">
+                        <label class="radio-chip"><input type="radio" name="format" value="image/jpeg" checked>
+                            JPEG
+                            (Recommended)</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="image/png">
+                            PNG</label>
+                        <label class="radio-chip"><input type="radio" name="format" value="application/pdf">
+                            PDF</label>
                     </div>
-                </section>
+                </div>
 
-                <!-- SEO Content -->
-                <section class="seo-content" id="help">
-                    <h2>SSC Photo & Signature Rules (2025-26)</h2>
-                    <p>Staff Selection Commission (SSC) is very strict. Forms are rejected for blurry photos or wrong
-                        dimensions.</p>
+                <button id="compress-btn" class="btn-action">Resize for SSC</button>
+            </div>
+        </section>
 
-                    <div class="exam-grid">
-                        <div class="exam-card">
-                            <span class="exam-name">SSC Photo Rules</span>
-                            <div class="exam-detail"><strong>Size:</strong> 20 KB to 50 KB</div>
-                            <div class="exam-detail"><strong>Format:</strong> JPEG / JPG</div>
-                            <div class="exam-detail"><strong>Dimensions:</strong> 3.5 cm x 4.5 cm</div>
-                        </div>
-                        <div class="exam-card">
-                            <span class="exam-name">SSC Signature Rules</span>
-                            <div class="exam-detail"><strong>Size:</strong> 10 KB to 20 KB</div>
-                            <div class="exam-detail"><strong>Format:</strong> JPEG / JPG</div>
-                            <div class="exam-detail"><strong>Dimensions:</strong> 4.0 cm x 2.0 cm</div>
-                        </div>
-                    </div>
+        <!-- Result Section -->
+        <section id="result-section" class="result hidden">
+            <div class="ad-slot ad-mid">
+                <div class="ad-placeholder"></div>
+            </div>
 
-                    <div class="pro-tips">
-                        <h3>Why are SSC Forms Rejected?</h3>
-                        <div class="tip-card"><b>Spectacles:</b> Never wear glasses in SSC photos. It is the #1 reason
-                            for
-                            rejection.</div>
-                        <div class="tip-card"><b>Blurry Signature:</b> Sign on plain white paper with a Black Pen. Blue
-                            ink
-                            scanning can look faint.</div>
-                    </div>
-                </section>
+            <div class="success-box">
+                <h3>SSC Ready! 🎉</h3>
+                <p class="success-note">Perfect for your application.</p>
+                <img id="result-image" class="result-preview" src="" alt="Compressed Result" loading="lazy">
+                <p id="final-size-display">New Size: -- KB</p>
+                <div class="download-actions">
+                    <a id="download-link" class="btn-download" download="ssc-photo.jpg">Download Image</a>
+                    <button id="reset-btn" class="btn-text">Resize Another</button>
+                </div>
+                <div class="share-prompt">
+                    <p>❤️ <b>Support us:</b> Help a friend by sharing!</p>
+                    <button class="btn-whatsapp"
+                        onclick="window.open('https://api.whatsapp.com/send?text=Resize%20photos%20for%20Govt%20Forms%2C%20Jobs%20%26%20Admissions%20in%201%20click!%20Fast%20%26%20Safe%3A%20https%3A%2F%2Fsarkariresizer.app', '_blank')">Share
+                        on WhatsApp</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Content -->
+        <section class="seo-content" id="help">
+            <h2>SSC Photo & Signature Rules (2025-26)</h2>
+            <p>Staff Selection Commission (SSC) is very strict. Forms are rejected for blurry photos or wrong
+                dimensions.</p>
+
+            <div class="exam-grid">
+                <div class="exam-card">
+                    <span class="exam-name">SSC Photo Rules</span>
+                    <div class="exam-detail"><strong>Size:</strong> 20 KB to 50 KB</div>
+                    <div class="exam-detail"><strong>Format:</strong> JPEG / JPG</div>
+                    <div class="exam-detail"><strong>Dimensions:</strong> 3.5 cm x 4.5 cm</div>
+                </div>
+                <div class="exam-card">
+                    <span class="exam-name">SSC Signature Rules</span>
+                    <div class="exam-detail"><strong>Size:</strong> 10 KB to 20 KB</div>
+                    <div class="exam-detail"><strong>Format:</strong> JPEG / JPG</div>
+                    <div class="exam-detail"><strong>Dimensions:</strong> 4.0 cm x 2.0 cm</div>
+                </div>
+            </div>
+
+            <div class="pro-tips">
+                <h3>Why are SSC Forms Rejected?</h3>
+                <div class="tip-card"><b>Spectacles:</b> Never wear glasses in SSC photos. It is the #1 reason
+                    for
+                    rejection.</div>
+                <div class="tip-card"><b>Blurry Signature:</b> Sign on plain white paper with a Black Pen. Blue
+                    ink
+                    scanning can look faint.</div>
+            </div>
+        </section>
 
     </main>
 
