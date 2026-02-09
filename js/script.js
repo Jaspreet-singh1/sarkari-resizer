@@ -211,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cropConfirmBtn = document.getElementById('crop-confirm-btn');
     const rotateBtn = document.getElementById('rotate-btn');
     let originalFileName = ''; // Store original filename for download
+    let croppedBlobUrl = null; // Track cropped image URL to prevent memory leak
 
     // Handle File Selection (Made Async for validation)
     async function handleFileSelect(e) {
@@ -356,7 +357,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Convert to Blob and load into Editor
         canvas.toBlob((blob) => {
-            const url = URL.createObjectURL(blob);
+            // Revoke previous cropped URL to free memory
+            if (croppedBlobUrl) {
+                URL.revokeObjectURL(croppedBlobUrl);
+            }
+
+            croppedBlobUrl = URL.createObjectURL(blob);
+            const url = croppedBlobUrl;
 
             // Load into Main Editor
             originalImage.src = url;
@@ -469,15 +476,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const customW = parseInt(document.getElementById('width-input').value);
         const customH = parseInt(document.getElementById('height-input').value);
 
-        if (customW && customH) {
-            width = customW;
-            height = customH;
-        } else if (customW) {
-            height = Math.round((height * customW) / width);
-            width = customW;
-        } else if (customH) {
-            width = Math.round((width * customH) / height);
-            height = customH;
+        // Validate dimensions - ignore NaN values
+        const validCustomW = !isNaN(customW) && customW > 0 ? customW : 0;
+        const validCustomH = !isNaN(customH) && customH > 0 ? customH : 0;
+
+        if (validCustomW && validCustomH) {
+            width = validCustomW;
+            height = validCustomH;
+        } else if (validCustomW) {
+            height = Math.round((height * validCustomW) / width);
+            width = validCustomW;
+        } else if (validCustomH) {
+            width = Math.round((width * validCustomH) / height);
+            height = validCustomH;
         } else {
             // Optimization: Cap max dimension to 1200px (Sufficient for forms)
             const MAX_DIMENSION = 1200;
@@ -557,12 +568,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!bestBlob || currentBlobSize > maxKB) {
 
                 // Smart Scaling Loop: Shrink dimensions until we fit at HIGH quality (0.7)
-                let scale = 0.95;
+                let resizeScale = 0.95; // Renamed to avoid shadowing outer 'scale' variable
                 let attempts = 0;
 
                 while (attempts < 20) {
-                    const newW = Math.floor(width * scale);
-                    const newH = Math.floor(height * scale);
+                    const newW = Math.floor(width * resizeScale);
+                    const newH = Math.floor(height * resizeScale);
 
                     if (newW < 200 || newH < 200) break; // Don't go microscopic
 
@@ -582,7 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         break;
                     }
 
-                    scale -= 0.05;
+                    resizeScale -= 0.05;
                     attempts++;
                 }
             }
@@ -595,44 +606,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // New Sharpening Function (Convolution Filter)
     function sharpenCanvas(ctx, w, h, mix) {
-        const weights = [0, -1, 0, -1, 5, -1, 0, -1, 0];
-        const katet = Math.round(Math.sqrt(weights.length));
-        const half = (katet * 0.5) | 0;
-        const dstData = ctx.createImageData(w, h);
-        const dstBuff = dstData.data;
-        const srcBuff = ctx.getImageData(0, 0, w, h).data;
-        let y = h;
+        try {
+            const weights = [0, -1, 0, -1, 5, -1, 0, -1, 0];
+            const katet = Math.round(Math.sqrt(weights.length));
+            const half = (katet * 0.5) | 0;
+            const dstData = ctx.createImageData(w, h);
+            const dstBuff = dstData.data;
+            const srcBuff = ctx.getImageData(0, 0, w, h).data;
+            let y = h;
 
-        while (y--) {
-            let x = w;
-            while (x--) {
-                const sy = y;
-                const sx = x;
-                const dstOff = (y * w + x) * 4;
-                let r = 0, g = 0, b = 0, a = 0;
+            while (y--) {
+                let x = w;
+                while (x--) {
+                    const sy = y;
+                    const sx = x;
+                    const dstOff = (y * w + x) * 4;
+                    let r = 0, g = 0, b = 0, a = 0;
 
-                for (let cy = 0; cy < katet; cy++) {
-                    for (let cx = 0; cx < katet; cx++) {
-                        const scy = sy + cy - half;
-                        const scx = sx + cx - half;
-                        if (scy >= 0 && scy < h && scx >= 0 && scx < w) {
-                            const srcOff = (scy * w + scx) * 4;
-                            const wt = weights[cy * katet + cx];
-                            r += srcBuff[srcOff] * wt;
-                            g += srcBuff[srcOff + 1] * wt;
-                            b += srcBuff[srcOff + 2] * wt;
-                            a += srcBuff[srcOff + 3] * wt;
+                    for (let cy = 0; cy < katet; cy++) {
+                        for (let cx = 0; cx < katet; cx++) {
+                            const scy = sy + cy - half;
+                            const scx = sx + cx - half;
+                            if (scy >= 0 && scy < h && scx >= 0 && scx < w) {
+                                const srcOff = (scy * w + scx) * 4;
+                                const wt = weights[cy * katet + cx];
+                                r += srcBuff[srcOff] * wt;
+                                g += srcBuff[srcOff + 1] * wt;
+                                b += srcBuff[srcOff + 2] * wt;
+                                a += srcBuff[srcOff + 3] * wt;
+                            }
                         }
                     }
-                }
 
-                dstBuff[dstOff] = r * mix + srcBuff[dstOff] * (1 - mix);
-                dstBuff[dstOff + 1] = g * mix + srcBuff[dstOff + 1] * (1 - mix);
-                dstBuff[dstOff + 2] = b * mix + srcBuff[dstOff + 2] * (1 - mix);
-                dstBuff[dstOff + 3] = srcBuff[dstOff + 3];
+                    dstBuff[dstOff] = r * mix + srcBuff[dstOff] * (1 - mix);
+                    dstBuff[dstOff + 1] = g * mix + srcBuff[dstOff + 1] * (1 - mix);
+                    dstBuff[dstOff + 2] = b * mix + srcBuff[dstOff + 2] * (1 - mix);
+                    dstBuff[dstOff + 3] = srcBuff[dstOff + 3];
+                }
             }
+            ctx.putImageData(dstData, 0, 0);
+        } catch (error) {
+            // Handle tainted canvas (cross-origin image) - skip sharpening
+            console.warn('Sharpening skipped due to canvas security restriction:', error);
         }
-        ctx.putImageData(dstData, 0, 0);
     }
 
     function getCanvasBlob(canvas, type, quality) {
