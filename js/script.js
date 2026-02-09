@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // State
     let currentFile = null;
     let originalImage = new Image();
+    let currentBlobUrl = null; // Track blob URL to prevent memory leaks
 
     console.log('Sarkari Photo Resizer Loaded');
 
@@ -90,7 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event Listeners
-    selectBtn.addEventListener('click', () => fileInput.click());
+    selectBtn.addEventListener('click', () => {
+        fileInput.value = ''; // Allow re-selecting the same file
+        fileInput.click();
+    });
 
     // Drag & Drop
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -194,6 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetBtn.addEventListener('click', () => {
         resultSection.classList.add('hidden');
         editorSection.classList.add('hidden');
+        document.querySelector('.upload-area').classList.remove('hidden'); // Show Upload Area
         fileInput.value = '';
         currentFile = null;
         window.scrollTo(0, 0);
@@ -387,7 +392,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetKB = getTargetSize();
         const targetFormat = getTargetFormat();
 
-        compressBtn.textContent = "Processing...";
+        // New Loading State
+        compressBtn.classList.add('btn-loading'); // Add spinner
+        compressBtn.textContent = ""; // Hide text
         compressBtn.disabled = true;
 
         // Use setTimeout to allow UI update
@@ -419,6 +426,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         const pdfBlob = doc.output('blob');
 
                         showResult(pdfBlob);
+
+                        // Reset Button
+                        compressBtn.classList.remove('btn-loading');
                         compressBtn.textContent = "Resize & Compress";
                         compressBtn.disabled = false;
                     };
@@ -438,6 +448,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 showToast("An error occurred during processing.", 'error');
             }
 
+            // Reset Button (Common exit)
+            compressBtn.classList.remove('btn-loading');
             compressBtn.textContent = "Resize & Compress";
             compressBtn.disabled = false;
         }, 100);
@@ -652,7 +664,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showResult(blob) {
-        const url = URL.createObjectURL(blob);
+        // Revoke previous URL to free memory
+        if (currentBlobUrl) {
+            URL.revokeObjectURL(currentBlobUrl);
+        }
+
+        currentBlobUrl = URL.createObjectURL(blob);
+        const url = currentBlobUrl;
         const sizeKB = (blob.size / 1024).toFixed(2);
 
         finalSizeText.textContent = `New Size: ${sizeKB} KB`;
