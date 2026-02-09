@@ -320,6 +320,14 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Failed to load image');
             showToast('Failed to load image. Please try again.', 'error');
             if (loadingText) loadingText.textContent = 'Failed to load image';
+
+            // Auto-recovery: Return to upload state after 2 seconds
+            setTimeout(() => {
+                cropModal.classList.add('hidden');
+                document.querySelector('.upload-area').classList.remove('hidden');
+                fileInput.value = '';
+                currentFile = null;
+            }, 2000);
         };
     }
 
@@ -481,6 +489,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const validCustomH = !isNaN(customH) && customH > 0 ? customH : 0;
 
         if (validCustomW && validCustomH) {
+            // Check for distortion
+            const originalRatio = img.width / img.height;
+            const customRatio = validCustomW / validCustomH;
+            const distortion = Math.abs(originalRatio - customRatio) / originalRatio;
+
+            if (distortion > 0.1) {
+                showToast('Warning: Custom dimensions will change the aspect ratio.', 'info');
+            }
+
             width = validCustomW;
             height = validCustomH;
         } else if (validCustomW) {
@@ -663,7 +680,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (radio.checked) {
                 if (radio.value === 'custom') {
                     const val = parseInt(customSizeInput.value);
-                    return (val && val > 0) ? val : 50; // Default to 50 if invalid
+                    if (val && val > 0 && val <= 1000) {
+                        return val;
+                    } else {
+                        // Show warning for empty or invalid custom input
+                        showToast('Please enter a valid size (10-1000 KB). Using 50KB default.', 'error');
+                        return 50;
+                    }
                 }
                 return parseInt(radio.value);
             }
@@ -685,6 +708,12 @@ document.addEventListener('DOMContentLoaded', () => {
             URL.revokeObjectURL(currentBlobUrl);
         }
 
+        if (!blob || blob.size === 0) {
+            console.error('Blob is empty or null');
+            showToast('Error processing image. Please try again.', 'error');
+            return;
+        }
+
         currentBlobUrl = URL.createObjectURL(blob);
         const url = currentBlobUrl;
         const sizeKB = (blob.size / 1024).toFixed(2);
@@ -693,13 +722,69 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadLink.href = url;
 
         // Show Compressed Preview
-        document.getElementById('result-image').src = url;
+        const resultImg = document.getElementById('result-image');
+
+        // Error Handler for Image Load
+        resultImg.onerror = function () {
+            console.error('Image failed to load:', url);
+            resultImg.style.display = 'none'; // Hide broken image
+            showToast('Preview failed to load, but download might work.', 'error');
+        };
+
+        resultImg.onload = function () {
+            resultImg.style.display = 'block';
+        };
+
+        const targetFormat = getTargetFormat();
+
+        // Safe PDF Preview (Inline SVG)
+        if (targetFormat === 'application/pdf') {
+            resultImg.style.display = 'none'; // Hide the img tag
+
+            // Check if we already injected the icon
+            let pdfContainer = document.getElementById('pdf-preview-container');
+            if (!pdfContainer) {
+                pdfContainer = document.createElement('div');
+                pdfContainer.id = 'pdf-preview-container';
+                pdfContainer.className = 'result-preview';
+                pdfContainer.style.display = 'flex';
+                pdfContainer.style.flexDirection = 'column';
+                pdfContainer.style.alignItems = 'center';
+                pdfContainer.style.justifyContent = 'center';
+                pdfContainer.style.padding = '20px';
+                pdfContainer.style.background = '#fef2f2';
+                pdfContainer.style.border = '2px solid #e8f0fe';
+                pdfContainer.style.borderRadius = '4px';
+
+                pdfContainer.innerHTML = `
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span style="margin-top: 10px; color: #d32f2f; font-weight: 600;">PDF Document Ready</span>
+                `;
+                resultImg.parentNode.insertBefore(pdfContainer, resultImg);
+            } else {
+                pdfContainer.style.display = 'flex';
+            }
+        } else {
+            // Remove PDF icon if exists
+            const existingPdf = document.getElementById('pdf-preview-container');
+            if (existingPdf) existingPdf.style.display = 'none';
+
+            resultImg.style.display = 'block';
+            resultImg.src = url;
+            resultImg.style.padding = '0';
+            resultImg.style.background = 'transparent';
+        }
 
         // Update extension based on type
-        const type = getTargetFormat();
         let ext = 'jpg';
-        if (type === 'image/png') ext = 'png';
-        if (type === 'application/pdf') ext = 'pdf';
+        if (targetFormat === 'image/png') ext = 'png';
+        if (targetFormat === 'application/pdf') ext = 'pdf';
 
         downloadLink.download = `compressed_image.${ext}`;
 
