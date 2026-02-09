@@ -120,8 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const dt = e.dataTransfer;
         const files = dt.files;
         if (files && files.length > 0) {
-            fileInput.files = files; // Update input for consistency
-            handleFileSelect({ target: { files: files } });
+            fileInput.files = files; // Update input for consistency - triggers 'change' event
+            // handleFileSelect removal prevents double processing
         }
     }
 
