@@ -376,9 +376,12 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 50px;
+    min-height: 280px;
     /* AdSense Policy: Spacing to prevent accidental clicks */
     margin-bottom: 2rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    /* Placeholder bg */
+    border-radius: 8px;
 }
 
 .ad-placeholder {
